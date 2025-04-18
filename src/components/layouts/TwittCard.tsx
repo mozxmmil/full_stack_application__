@@ -1,6 +1,7 @@
 import {
   IconBookmark,
   IconChartHistogram,
+  IconHeart,
   IconMessageCircle,
   IconRepeat,
   IconUpload,
@@ -26,8 +27,8 @@ const TwittCard = () => {
       <div className="flex flex-col gap-3">
         <div className="top flex gap-2">
           <span>userName</span>
-          <span>Userid .</span>
-          <span>4h</span>
+          <span className="text-neutral-500">Userid .</span>
+          <span className="text-neutral-500">4h</span>
         </div>
         <div className="whitespace-break-spaces">
           rem ipsum dolor s it amet consectetur adipisicing elit. Tempore
@@ -46,22 +47,26 @@ const TwittCard = () => {
           />
         </div>
         <div className="lastbottom flex items-center justify-between text-sm">
-          <div className="iconsContainer flex items-center gap-2">
+          <div className="iconsContainer flex items-center gap-2 hover:cursor-pointer hover:text-blue-500">
             <IconMessageCircle className="size-5" />
             <span>12</span>
           </div>
-          <div className="iconsContainer flex items-center gap-2">
+          <div className="iconsContainer flex items-center gap-2 hover:cursor-pointer hover:text-green-500">
             <IconRepeat className="size-5" />
             <span>21</span>
           </div>
-          <div className="iconsContainer flex items-center gap-2">
+          <div className="iconsContainer flex items-center gap-2 hover:cursor-pointer hover:text-pink-500">
+            <IconHeart className="size-5" />
+            <span>22</span>
+          </div>
+          <div className="iconsContainer flex items-center gap-2 hover:cursor-pointer hover:text-blue-500">
             <IconChartHistogram className="size-5" />
             <span>22</span>
           </div>
 
           <div className="iconsContainer flex items-center gap-2">
-            <IconBookmark className="size-5" />
-            <IconUpload className="size-5" />
+            <IconBookmark className="size-5 hover:cursor-pointer hover:text-blue-500" />
+            <IconUpload className="size-5 hover:cursor-pointer hover:text-blue-500" />
           </div>
         </div>
       </div>
