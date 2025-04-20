@@ -22,7 +22,6 @@ const MultiStepForm = () => {
     image: null,
   });
 
- 
   const handleStepIncrement = () => {
     setstep((prev) => prev + 1);
   };
@@ -137,7 +136,7 @@ const MultiStepForm = () => {
                   alt="image not found"
                   width={50}
                   height={50}
-                  quality={50}
+                  quality={10}
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -172,7 +171,7 @@ const MultiStepForm = () => {
               />
               <Buttion
                 title="Sign Up"
-                type="submit"
+                type="button"
                 className="w-full flex-row-reverse text-base font-medium sm:w-fit"
                 icon={
                   <div>
@@ -183,7 +182,6 @@ const MultiStepForm = () => {
                     )}
                   </div>
                 }
-                
               />
             </div>
           </div>

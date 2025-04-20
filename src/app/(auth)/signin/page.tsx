@@ -2,6 +2,7 @@
 import React from "react";
 import { signIn, signOut } from "next-auth/react";
 import Buttion from "@/components/ui/Buttion";
+import ClickoutsideCloser from "@/components/common/clickOutsideCloser";
 
 const page = () => {
   
@@ -20,22 +21,16 @@ const page = () => {
     console.log(responce);
   };
   return (
-    <div className="h-screen w-screen">
-      <Buttion
-        className="mx-auto mt-[30rem] w-fit"
-        onClick={handleClick}
-        title="Sign in with Google"
-      />
-      <Buttion
-        className="mx-auto mt-[30rem] w-fit"
-        onClick={handlerLogout}
-        title="logout"
-      />
-      <Buttion
-        className="mx-auto mt-[30rem] w-fit"
-        onClick={handleLogin}
-        title="login with email"
-      />
+    <div className="h-screen w-screen flex">
+      <ClickoutsideCloser>
+        <h1 className="text-white">hello ji</h1>
+      </ClickoutsideCloser>
+      <ClickoutsideCloser>
+        <h1 className="text-white">hello ji</h1>
+      </ClickoutsideCloser>
+      <ClickoutsideCloser>
+        <h1 className="text-white">hello ji</h1>
+      </ClickoutsideCloser>
     </div>
   );
 };
