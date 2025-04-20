@@ -1,11 +1,11 @@
-import { DefaultSession, DefaultUser, DefaultJWT  } from "next-auth";
-
+import { DefaultSession, DefaultUser, DefaultJWT } from "next-auth";
 
 declare module "next-auth" {
   interface User extends DefaultUser {
     id: string;
     email?: string;
     name?: string;
+    jwt?:string
   }
 
   interface Account {
@@ -23,19 +23,19 @@ declare module "next-auth" {
     emailVerified?: Date | null;
     accessToken?: string;
     refreshToken?: string;
-    age: number;
+    jwt?: string | null;
   }
 
   interface Session {
     accessToken?: string;
     refreshToken?: string;
-
     user: {
       id: string;
       email?: string | null | undefined;
       name?: string | null | undefined;
       image?: string | null | undefined;
       emailVerified?: boolean | null;
+      jwt?: string | null;
     } & DefaultSession["user"];
   }
 }

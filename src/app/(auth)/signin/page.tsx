@@ -2,7 +2,9 @@
 import React from "react";
 import { signIn, signOut } from "next-auth/react";
 import Buttion from "@/components/ui/Buttion";
+
 const page = () => {
+  
   const handleClick = async () => {
     signIn("google", { callbackUrl: "/" });
   };
@@ -13,7 +15,7 @@ const page = () => {
     const responce = await signIn("credentials", {
       redirect: false,
       email: "mdmozammil605@gmail.com",
-      password: "mozammil",
+      password: "123456789",
     });
     console.log(responce);
   };

@@ -1,4 +1,4 @@
-import { SideBarListProps } from "@/types/leftSideBar";
+import { SideBarListProps } from "../../types/leftSideBar";
 import {
   IconBell,
   IconDotsCircleHorizontal,
