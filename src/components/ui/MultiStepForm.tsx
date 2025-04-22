@@ -1,16 +1,28 @@
 "use client";
+import { iconXVariants } from "@/motion/vairants";
 import {
   IconArrowLeft,
   IconArrowNarrowRightDashed,
-  IconArrowRightToArc,
+  IconArrowRight,
   IconLoader2,
+  IconX,
 } from "@tabler/icons-react";
+import { motion } from "motion/react";
 import Image from "next/image";
-import { useState } from "react";
-import { UserInputTypeWithImage } from "../../../types/zod/userSchema";
+import React, { useState } from "react";
+import { toast } from "sonner";
+import {
+  UserInputError,
+  UserInputTypeWithImage,
+  userSchema,
+} from "../../../types/zod/userSchema";
 import Buttion from "./Buttion";
 
-const MultiStepForm = () => {
+type Props = {
+  callback?: (e: React.MouseEvent<HTMLDivElement>) => void;
+};
+
+const MultiStepForm = ({ callback }: Props) => {
   const [prewImage, setPrewImage] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [step, setstep] = useState<number>(1);
@@ -22,8 +34,38 @@ const MultiStepForm = () => {
     image: null,
   });
 
+  const [formError, setformError] = useState<UserInputError>({
+    name: "",
+    email: "",
+    password: "",
+    conformPassword: "",
+    image: "",
+  });
+  const handleCloseDialogBox = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (callback) {
+      callback(e);
+    }
+  };
   const handleStepIncrement = () => {
-    setstep((prev) => prev + 1);
+    const { error, success } = userSchema.safeParse(formData);
+
+    if (!success && !error.errors[0].path.includes("image") && step < 2) {
+      error!.errors.forEach((data) =>
+        setformError((prev) => ({
+          ...prev,
+          [data.path[0]]: step >= 1 ? data.message : "",
+        })),
+      );
+    } else {
+      setformError({
+        name: "",
+        email: "",
+        password: "",
+        conformPassword: "",
+        image: "",
+      });
+      setstep((prev) => prev + 1);
+    }
   };
 
   const handleChage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,11 +84,41 @@ const MultiStepForm = () => {
   const handlSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    console.log(formData);
+    const { error, success } = userSchema.safeParse(formData);
+    if (!success) {
+      error.errors.forEach((data) =>
+        setformError((prev) => ({ ...prev, [data.path[0]]: data.message })),
+      );
+      return;
+    }
+    if (formData.image === null) {
+      setformError((prev) => ({
+        ...prev,
+        image: "please select image",
+      }));
+      return;
+    }
+    // api call --------->
     setLoading(false);
+    toast.success("account created successfully");
+    setformError({
+      name: "",
+      email: "",
+      password: "",
+      conformPassword: "",
+      image: "",
+    });
   };
   return (
-    <div className="w-xl space-y-5 rounded-lg bg-black p-6 text-white">
+    <div className="relative w-xl space-y-5 rounded-lg bg-black p-6 text-white">
+      <motion.div
+        onClick={handleCloseDialogBox}
+        variants={iconXVariants}
+        whileHover={"hover"}
+        className="absolute top-7 right-7 hover:cursor-pointer"
+      >
+        <IconX className="size-7" />
+      </motion.div>
       <div className="space-y-2 text-center">
         <h1 className="text-3xl font-bold text-white">Create your account</h1>
         <span className="text-sm font-semibold text-gray-500">
@@ -71,6 +143,9 @@ const MultiStepForm = () => {
                 placeholder="Enter your name"
                 className="p-3 outline-neutral-400"
               />
+              {formError.name && (
+                <span className="text-red-600">{formError.name}</span>
+              )}
             </div>
             <div className="flex flex-col">
               <label
@@ -87,6 +162,9 @@ const MultiStepForm = () => {
                 placeholder="Enter your Email"
                 className="p-3 outline-neutral-400"
               />
+              {formError.email && (
+                <span className="text-red-600">{formError.email}</span>
+              )}
             </div>
             <div className="flex flex-col">
               <label
@@ -103,6 +181,9 @@ const MultiStepForm = () => {
                 placeholder="Enter your password"
                 className="p-3 outline-neutral-400"
               />
+              {formError.password && (
+                <span className="text-red-600">{formError.password}</span>
+              )}
             </div>
             <div className="flex flex-col">
               <label
@@ -119,12 +200,17 @@ const MultiStepForm = () => {
                 placeholder="Enter your conform password"
                 className="p-3 outline-neutral-400"
               />
+              {formError.conformPassword && (
+                <span className="text-red-600">
+                  {formError.conformPassword}
+                </span>
+              )}
             </div>
             <Buttion
               onClick={handleStepIncrement}
               title="Next"
-              icon={<IconArrowRightToArc />}
-              className="mt-10 font-medium"
+              icon={<IconArrowRight />}
+              className="mt-10 flex flex-row-reverse font-medium"
             />
           </div>
         ) : (
@@ -140,7 +226,7 @@ const MultiStepForm = () => {
                   className="h-full w-full object-cover"
                 />
               </div>
-              <div className="mx-auto mt-4">
+              <div className="mx-auto mt-4 flex flex-col">
                 <label
                   className="rounded-lg border border-blue-500 bg-transparent px-4 py-3 hover:cursor-pointer"
                   htmlFor="Image"
@@ -156,6 +242,12 @@ const MultiStepForm = () => {
                   id="Image"
                   className="hidden p-4"
                 />
+
+                {formError.image && (
+                  <span className="mt-3 text-center text-red-600">
+                    {formError.image}
+                  </span>
+                )}
               </div>
             </div>
             <div className="flex flex-col items-center justify-between sm:flex-row">
@@ -171,7 +263,7 @@ const MultiStepForm = () => {
               />
               <Buttion
                 title="Sign Up"
-                type="button"
+                type="submit"
                 className="w-full flex-row-reverse text-base font-medium sm:w-fit"
                 icon={
                   <div>

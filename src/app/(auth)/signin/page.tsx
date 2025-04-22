@@ -1,38 +1,11 @@
-"use client";
-import React from "react";
-import { signIn, signOut } from "next-auth/react";
-import Buttion from "@/components/ui/Buttion";
-import ClickoutsideCloser from "@/components/common/clickOutsideCloser";
+import React from 'react'
 
-const page = () => {
-  
-  const handleClick = async () => {
-    signIn("google", { callbackUrl: "/" });
-  };
-  const handlerLogout = async () => {
-    signOut({ callbackUrl: "/logger" });
-  };
-  const handleLogin = async () => {
-    const responce = await signIn("credentials", {
-      redirect: false,
-      email: "mdmozammil605@gmail.com",
-      password: "123456789",
-    });
-    console.log(responce);
-  };
+type Props = {}
+
+const page = (props: Props) => {
   return (
-    <div className="h-screen w-screen flex">
-      <ClickoutsideCloser>
-        <h1 className="text-white">hello ji</h1>
-      </ClickoutsideCloser>
-      <ClickoutsideCloser>
-        <h1 className="text-white">hello ji</h1>
-      </ClickoutsideCloser>
-      <ClickoutsideCloser>
-        <h1 className="text-white">hello ji</h1>
-      </ClickoutsideCloser>
-    </div>
-  );
-};
+    <div>page</div>
+  )
+}
 
-export default page;
+export default page

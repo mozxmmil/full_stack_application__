@@ -5,9 +5,24 @@ import {
   IconBrandAppleFilled,
   IconBrandGoogleFilled,
 } from "@tabler/icons-react";
+import MultiStepForm from "../ui/MultiStepForm";
+import ClickoutsideCloser from "../common/clickOutsideCloser";
+import Link from "next/link";
 
 const Login_right = () => {
-  const [isInputshowing, setIsInputshowing] = useState<boolean>(false);
+  const [isVisiblediv, setIsVisiblediv] = useState(false);
+
+  const handleClickInputField = (
+    e?: React.MouseEvent<HTMLButtonElement | HTMLDivElement>,
+  ) => {
+    if (e) e.stopPropagation();
+    setIsVisiblediv(!isVisiblediv);
+  };
+
+  const handleCallback = (isVisible: boolean) => {
+    setIsVisiblediv(!isVisible);
+  };
+
   return (
     <div className="flex max-h-full min-h-[50vh] w-full flex-col items-center justify-center gap-4 text-white md:items-start md:justify-start">
       <h1 className="scale-y-90 transform text-6xl font-bold tracking-tighter capitalize sm:text-5xl md:text-8xl">
@@ -33,6 +48,7 @@ const Login_right = () => {
           <div className="h-[1px] w-full bg-neutral-500" />
         </div>
         <Buttion
+          onClick={handleClickInputField}
           className="bg-blue-500 font-semibold text-white hover:bg-blue-600"
           title="Create Account"
         />
@@ -44,12 +60,21 @@ const Login_right = () => {
         </p>
         <div className="mt-15">
           <h1 className="text-xl font-bold">Already have account?</h1>
-          <Buttion
-            title="Sign in"
-            className="border border-neutral-400 bg-transparent text-blue-500 hover:bg-[rgba(33,150,243,0.15)]"
-          />
+          <Link href={"signin"}>
+            <Buttion
+              title="Sign in"
+              className="border border-neutral-400 bg-transparent text-blue-500 hover:bg-[rgba(33,150,243,0.15)]"
+            />
+          </Link>
         </div>
       </div>
+      {isVisiblediv && (
+        <div className="absolute inset-0 flex h-screen w-full items-center justify-center bg-[rgba(51,42,42,0.31)]">
+          <ClickoutsideCloser callBack={handleCallback}>
+            <MultiStepForm callback={handleClickInputField} />
+          </ClickoutsideCloser>
+        </div>
+      )}
     </div>
   );
 };

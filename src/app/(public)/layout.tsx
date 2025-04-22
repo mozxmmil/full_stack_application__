@@ -5,21 +5,22 @@ import { GeistSans } from "geist/font/sans";
 import { cn } from "@/utils/cn";
 
 type Props = {
-	children: React.ReactNode;
+  children: React.ReactNode;
 };
 const layout = ({ children }: Props) => {
-	return (
-		<main
-			className={cn(
-				"grid grid-cols-12 h-screen max-w-7xl mx-auto justify-center  ",
-				GeistSans.className
-			)}
-		>
-			<SidebarLeft />
-			{children}
-			<RightSidebar />
-		</main>
-	);
+  return (
+    <main
+      className={cn(
+        "mx-auto grid h-screen max-w-7xl grid-cols-12 justify-center",
+        GeistSans.className,
+      )}
+    >
+      <SidebarLeft />
+      {children}
+      <RightSidebar />
+     
+    </main>
+  );
 };
 
 export default layout;

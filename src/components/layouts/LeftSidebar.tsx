@@ -4,7 +4,8 @@ import Link from "next/link";
 import React from "react";
 import Buttion from "../ui/Buttion";
 
-const SidebarLeft = () => {
+const 
+SidebarLeft = () => {
   return (
     <nav className="col-span-3 flex justify-end  ">
       <div className="h-full py-4 2xl:w-[85%] ">

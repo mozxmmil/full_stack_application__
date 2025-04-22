@@ -3,11 +3,15 @@ import { useOutsideClick } from "@/hook/useOutsideClick";
 
 type Props = {
   children: React.ReactNode;
+  callBack?: (arg: boolean) => void;
 };
-const ClickoutsideCloser = ({ children }: Props) => {
+const ClickoutsideCloser = ({ children, callBack }: Props) => {
   const [isVisible, setIsVisible] = useState(true);
   const ref = useOutsideClick<HTMLDivElement>({
-    onClickOutside: () => setIsVisible(false),
+    onClickOutside: () => {
+      setIsVisible(false);
+      callBack!(isVisible);
+    },
     enabled: isVisible,
   });
   if (!isVisible) return null;
