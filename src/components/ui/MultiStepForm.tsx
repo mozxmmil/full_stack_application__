@@ -24,7 +24,7 @@ type Props = {
 
 const MultiStepForm = ({ callback }: Props) => {
   const [prewImage, setPrewImage] = useState<string>("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [step, setstep] = useState<number>(1);
   const [formData, setFormData] = useState<UserInputTypeWithImage>({
     name: "",
