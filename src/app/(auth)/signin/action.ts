@@ -3,14 +3,20 @@
 import { ApiError } from "@/utils/apiHandler";
 import { signinSchema } from "../../../../types/zod/signinSchema";
 import { prismaClient } from "@/utils/dbConnect";
+import { UseActionStatetype } from "@/components/layouts/SignInRight";
 
-export async function action(formdata: FormData) {
+export async function action(
+  prev: UseActionStatetype,
+  formdata: FormData,
+): Promise<UseActionStatetype> {
   const email = formdata.get("email");
   const password = formdata.get("password");
   const data = {
     email,
     password,
   };
+  
+  
   const varyfied = signinSchema.safeParse(data);
   if (!varyfied.success) {
     throw new ApiError(
@@ -32,6 +38,7 @@ export async function action(formdata: FormData) {
           name: email as string,
         },
       ],
+
     },
   });
 

@@ -1,5 +1,3 @@
-
-
 import SigninRightCard from "@/components/layouts/SignInRight";
 import { IconBrandX } from "@tabler/icons-react";
 
@@ -10,7 +8,7 @@ const page = () => {
         <IconBrandX className="size-2/4 text-white sm:h-1/2 sm:w-1/2" />
       </div>
       <div className="flex h-full w-full items-center">
-      <SigninRightCard/>
+        <SigninRightCard />
       </div>
     </div>
   );
