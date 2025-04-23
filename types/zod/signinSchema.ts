@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const signinSchema = z.object({
-  identifier: z
+  email: z
     .string()
     .min(3, "Must be at least 3 characters")
     .refine(
@@ -15,5 +15,7 @@ export const signinSchema = z.object({
         message: "Must be a valid email or username",
       },
     ),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z.string().min(6, "Password must be 6 characters"),
 });
+
+export type SigninInputType = z.infer<typeof signinSchema>;

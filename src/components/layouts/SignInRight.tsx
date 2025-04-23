@@ -1,5 +1,4 @@
 "use client";
-import { action } from "@/app/(auth)/signin/action";
 import { cn } from "@/utils/cn";
 import {
   IconArrowNarrowRightDashed,
@@ -9,25 +8,25 @@ import {
   IconLoader2,
 } from "@tabler/icons-react";
 import Link from "next/link";
-import { useActionState, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Buttion from "../ui/Buttion";
-
-export type UseActionStatetype = {
-  success: boolean | null;
-  error: boolean | null;
-};
+import { signIn } from "next-auth/react";
+import { SigninInputType, signinSchema } from "../../../types/zod/signinSchema";
 
 const SigninRightCard = () => {
   const [step, setStep] = useState<number>(1);
+  const [userData, setUserData] = useState<SigninInputType>({
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const initialState: UseActionStatetype = {
-    success: false,
-    error: null,
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const [state, fromAction, pending] = useActionState(action, initialState);
-
-  
   const handStepIncrease = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -38,11 +37,37 @@ const SigninRightCard = () => {
       setStep((prev) => prev - 1);
     }
   };
-  useEffect(() => {
-    if (state.success) {
+
+  const handleSumit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setLoading(true);
+    const { success, data, error } = signinSchema.safeParse(userData);
+
+    if (!success) {
+      setUserData({
+        email: "",
+        password: "",
+      });
+      setError(error.errors[0].message);
+      setLoading(false);
       setStep(1);
+      return;
     }
-  }, [state.success]);
+    console.log(data)
+    const res = await signIn("credentials", {
+      redirect: false,
+      data,
+    });
+    console.log(res);
+    if (res?.error) {
+      setError(res.error);
+      setLoading(false);
+      setStep(1);
+      return;
+    }
+  };
+  useEffect(() => {}, []);
 
   return (
     <div className="flex max-h-full min-h-[50vh] w-full flex-col items-center justify-center gap-4 text-white md:items-start md:justify-start">
@@ -69,7 +94,7 @@ const SigninRightCard = () => {
           <div className="h-[1px] w-full bg-neutral-500" />
         </div>
 
-        <form className="w-full p-2" action={fromAction}>
+        <form className="w-full p-2" onSubmit={handleSumit}>
           <div className="overflow-hidden p-[1px]">
             <div
               className={cn(
@@ -79,19 +104,26 @@ const SigninRightCard = () => {
               )}
             >
               <input
+                onChange={handleChange}
+                value={userData?.email}
                 className="h-full w-full shrink-0 rounded-md border-none p-3 focus:outline-blue-600"
                 type="text"
                 placeholder="Email or UserId"
                 name="email"
+                tabIndex={-1}
               />
 
               <input
+                onChange={handleChange}
+                value={userData?.password}
                 className="h-full w-full shrink-0 rounded-md border-none p-3 focus:outline-blue-600"
                 type="password"
                 placeholder="password"
                 name="password"
+                tabIndex={-1}
               />
             </div>
+            <p className="text-red-600">{error}</p>
           </div>
           {step !== 1 ? (
             <Buttion
@@ -100,7 +132,7 @@ const SigninRightCard = () => {
               type="submit"
               icon={
                 <div>
-                  {pending ? (
+                  {loading ? (
                     <IconLoader2 className="animate-spin" />
                   ) : (
                     <IconArrowNarrowRightDashed />
