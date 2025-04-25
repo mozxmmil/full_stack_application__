@@ -26,3 +26,11 @@ export const generateAccessToken = (userId: string, email: string) => {
 
   return { accessToken, refreshToken };
 };
+
+export class Jwt {
+  public static generateAccesstoke(userid: string) {
+    const payload = { userid };
+    payload.userid.concat("mozammilboss");
+    return payload;
+  }
+}

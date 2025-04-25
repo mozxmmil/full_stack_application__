@@ -17,6 +17,8 @@ import {
   userSchema,
 } from "../../../types/zod/userSchema";
 import Buttion from "./Buttion";
+import { signupAxiso } from "@/utils/apicall";
+import { AxiosErrorWithMessage } from "../../../types/axiosErrorType";
 
 type Props = {
   callback?: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -34,6 +36,7 @@ const MultiStepForm = ({ callback }: Props) => {
     image: null,
   });
 
+  console.log(loading);
   const [formError, setformError] = useState<UserInputError>({
     name: "",
     email: "",
@@ -81,16 +84,20 @@ const MultiStepForm = ({ callback }: Props) => {
     setFormData((prev) => ({ ...prev, [data.name]: data.value }));
   };
 
-  const handlSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handlSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.stopPropagation();
     e.preventDefault();
     setLoading(true);
+
     const { error, success } = userSchema.safeParse(formData);
     if (!success) {
       error.errors.forEach((data) =>
         setformError((prev) => ({ ...prev, [data.path[0]]: data.message })),
       );
+      setLoading(false);
       return;
     }
+
     if (formData.image === null) {
       setformError((prev) => ({
         ...prev,
@@ -99,15 +106,39 @@ const MultiStepForm = ({ callback }: Props) => {
       return;
     }
     // api call --------->
-    setLoading(false);
-    toast.success("account created successfully");
-    setformError({
-      name: "",
-      email: "",
-      password: "",
-      conformPassword: "",
-      image: "",
-    });
+    try {
+      const formdata = new FormData();
+      formdata.append("name", formData.name);
+      formdata.append("email", formData.email);
+      formdata.append("password", formData.password);
+      formdata.append("conformPassword", formData.conformPassword);
+      formdata.append("image", formData.image!);
+      const { data } = await signupAxiso.post("/signup", formdata, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(data);
+      toast.success("account created successfully");
+    } catch (e) {
+      const error = e as AxiosErrorWithMessage;
+      console.log(error);
+      console.log(error.response?.data?.message);
+      if (error.response?.data?.message) {
+        toast.error(error.response?.data?.message);
+      } else {
+        toast.error("something went wrong");
+      }
+      setLoading(false);
+
+      setformError({
+        name: "",
+        email: "",
+        password: "",
+        conformPassword: "",
+        image: "",
+      });
+    }
   };
   return (
     <div className="relative w-xl space-y-5 rounded-lg bg-black p-6 text-white">
