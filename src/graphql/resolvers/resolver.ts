@@ -1,13 +1,9 @@
-import { createTodoHandler, getImagehandler, getTodoHandler } from "../controller/getUser";
+import {
+  getUserHandler,
+} from "../controller/getUser";
 
 export const Resolver = {
   Query: {
-    getTodo:getTodoHandler
+    getUser: getUserHandler,
   },
-  Todo:{
-    image:getImagehandler
-  },
-  Mutation:{
-    createTodo:createTodoHandler
-  }
 };

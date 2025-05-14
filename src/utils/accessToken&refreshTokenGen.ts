@@ -1,7 +1,8 @@
-import { sign, SignOptions } from "jsonwebtoken";
+
+import { sign, SignOptions, verify } from "jsonwebtoken";
 import { ApiError } from "./apiHandler";
 
-export const generateAccessToken = (userId: string, email: string) => {
+export const generateAccessToken = (userId: string, email?: string) => {
   if (userId === undefined || email === undefined)
     throw new ApiError(400, "userId or email is undefined");
 
@@ -27,10 +28,16 @@ export const generateAccessToken = (userId: string, email: string) => {
   return { accessToken, refreshToken };
 };
 
-export class Jwt {
-  public static generateAccesstoke(userid: string) {
-    const payload = { userid };
-    payload.userid.concat("mozammilboss");
-    return payload;
+export function GetUserFromAccessToken(token: string) {
+  if (!token || !process.env.ACCESS_TOKEN)
+    throw new Error("Environment variable ACCESS_TOKEN or token is missing");
+
+  try {
+    const secret = process.env.ACCESS_TOKEN! || "secret";
+    const user = verify(token, secret);
+    if (!user) throw new Error("Acesstoken Expire");
+    return user ;
+  } catch (err) {
+    throw new Error("invalid tokend");
   }
 }

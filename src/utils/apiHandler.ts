@@ -1,3 +1,10 @@
+
+export interface ApiResponseType<T> {
+    statusCode: number;
+    message: string;
+    success: boolean;
+    data: T | null;
+  }
 export class ApiResponse<T> {
   constructor(statusCode: number, message: string, success: boolean, data: T) {
     this.statusCode = statusCode;

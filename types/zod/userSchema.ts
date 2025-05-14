@@ -6,9 +6,9 @@ export const userSchema = z
     email: z.string().email(),
     password: z
       .string()
-      .min(6, { message: "minimum password should be 6 letter" })
-      .max(10),
-    conformPassword: z.string().min(6).max(10),
+      .min(3, { message: "minimum password should be 6 letter" })
+      .max(20),
+    conformPassword: z.string().min(3).max(20),
   })
   .refine((data) => data.password === data.conformPassword, {
     message: "password do no match",
@@ -21,9 +21,9 @@ export const userSchemaforApi = z
     email: z.string().email(),
     password: z
       .string()
-      .min(6, { message: "minimum password should be 6 letter" })
-      .max(10),
-    conformPassword: z.string().min(6).max(10),
+      .min(3, { message: "minimum password should be 6 letter" })
+      .max(20),
+    conformPassword: z.string().min(3).max(20),
     image: z
       .instanceof(File)
       .refine((file) => file.size <= 5 * 1024 * 1024, {

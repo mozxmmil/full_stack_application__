@@ -17,4 +17,13 @@ export class Cloudinary {
       throw error;
     }
   }
+
+  public static async ImageUriConverter(image: File): Promise<string> {
+    if (!image) return "image required";
+    const bufferdata = await image.arrayBuffer();
+    const buffer = Buffer.from(bufferdata);
+    const base64 = buffer.toString("base64");
+    const uri = `data:${image.type};base64,${base64}`;
+    return uri;
+  }
 }

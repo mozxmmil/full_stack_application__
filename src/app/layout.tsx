@@ -1,6 +1,10 @@
+import {
+    QueryClientProvider,
+    useQueryClient
+} from "@tanstack/react-query";
 import type { Metadata } from "next";
-import "./globals.css";
 import { Toaster } from "sonner";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,10 +16,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const query = useQueryClient();
   return (
     <html lang="en">
       <body className="bg-black">
-        {children}
+        <QueryClientProvider client={query}>{children}</QueryClientProvider>
         <Toaster />
       </body>
     </html>

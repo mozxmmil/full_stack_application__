@@ -1,38 +1,16 @@
+import { TokenType } from "@/app/api/graphql/route";
 import { prismaClient } from "@/utils/dbConnect";
 
-export const getTodoHandler = async (
-  parent: undefined,
-  { id }: { id: number },
-) => {
-  const todo = await prismaClient.todo.findUnique({
+export const getUserHandler = async (_: any, arg: any, context: TokenType) => {
+  const { user } = context!;
+
+  if (!user?.userId) throw new Error("userId must");
+
+  const loggedInUser = await prismaClient.user.findUnique({
     where: {
-      id,
+      id: user.userId,
     },
   });
-  return todo;
-};
-
-type Todo = {
-  title: string;
-  description: string;
-};
-export const createTodoHandler = async (
-  parent: undefined,
-  { title, description }: Todo,
-) => {
-  const todo = await prismaClient.todo.create({
-    data: {
-      title,
-      description,
-    },
-  });
-
-  return todo;
-};
-
-export const getImagehandler = (parent: any) => {
-  console.log(parent);
-  return {
-    url: "https://picsum.photos/200/300",
-  };
+  if (!loggedInUser) throw new Error("user not found");
+  return loggedInUser;
 };

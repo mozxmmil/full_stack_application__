@@ -1,3 +1,4 @@
+
 import Login_right from "@/components/layouts/SignuprRight";
 import { IconBrandX } from "@tabler/icons-react";
 import React from "react";

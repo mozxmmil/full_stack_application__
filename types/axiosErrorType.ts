@@ -5,7 +5,9 @@ export type AxiosErrorWithMessage = AxiosError & {
   message: string;
   response?: {
     data?: {
-      message?: string;
+      data?: {
+        message: string;
+      };
     };
   };
 };

@@ -1,21 +1,19 @@
-import { generateAccessToken, Jwt } from "@/utils/accessToken&refreshTokenGen";
+import { generateAccessToken } from "@/utils/accessToken&refreshTokenGen";
 import { ApiError, ApiResponse } from "@/utils/apiHandler";
 import { hashPassword } from "@/utils/bcrypt";
+import { Cloudinary } from "@/utils/cloudinay";
 import { prismaClient } from "@/utils/dbConnect";
 import { NextRequest, NextResponse } from "next/server";
 import { userSchemaforApi } from "../../../../../types/zod/userSchema";
-import { readFileSync } from "fs";
-import { arrayBuffer, buffer } from "stream/consumers";
-import { Cloudinary } from "@/utils/cloudinay";
 
 export async function POST(req: NextRequest) {
   // getting data from the form
   const formData = await req.formData();
   try {
-    const resName = formData.get("name");
-    const resemail = formData.get("email");
-    const respassword = formData.get("password");
-    const resconformPassword = formData.get("conformPassword");
+    const resName = formData.get("name") as string;
+    const resemail = formData.get("email") as string;
+    const respassword = formData.get("password") as string;
+    const resconformPassword = formData.get("conformPassword") as string;
     const resimage = formData.get("image") as File;
 
     // making data object for prisma and zod type checking
@@ -27,90 +25,76 @@ export async function POST(req: NextRequest) {
       image: resimage,
     };
 
-    const bufferdata = await data.image.arrayBuffer();
-    const buffer = Buffer.from(bufferdata);
-    const base64 = buffer.toString("base64");
-    const uri = `data:${data.image.type};base64,${base64}`;
-    console.log(uri);
-
-    Cloudinary.UploadImage(uri).then((data) => console.log(data));
-
-    //todo: now cloudinary has impliment successfully and now i have to clear the code like remove console.log
-    return NextResponse.json({
-      status: "success",
-      message: "user created successfully",
-    });
     // zod type checking
-    // const zodParseData = userSchemaforApi.safeParse(data);
 
-    // if (!zodParseData.success)
-    //   throw new ApiError(
-    //     400,
-    //     "invalid data",
-    //     JSON.stringify(zodParseData.error.format()),
-    //   );
+    const zodParseData = userSchemaforApi.safeParse(data);
 
-    // // destructuring the data
-    // const { name, email, password } = zodParseData.data;
+    if (!zodParseData.success)
+      throw new ApiError(
+        400,
+        "invalid data",
+        JSON.stringify(zodParseData.error.format()),
+      );
 
-    // // cheking if user already exist
-    // const user = await prismaClient.user.findUnique({ where: { email } });
-    // if (user) throw new Error("user already exist");
+    // destructuring the data
+    const { name, email, password, image } = zodParseData.data;
 
-    // // before saving the password we have to hash it
-    // const hashedPassword = await hashPassword(password);
+    // cheking if user already exist
+    const user = await prismaClient.user.findUnique({ where: { email } });
+    if (user) throw new ApiResponse(400, "user already exist", false, {});
+    // before saving the password we have to hash it
+    const hashedPassword = await hashPassword(password);
 
-    // const newUser = await prismaClient.user.create({
-    //   data: {
-    //     name,
-    //     email,
-    //     passwrod: hashedPassword,
-    //   },
-    // });
+    const uri = await Cloudinary.ImageUriConverter(image);
 
-    // if (!newUser) throw new ApiError(400, "something went wrong");
+    const imageUrl = await Cloudinary.UploadImage(uri);
 
-    // const { accessToken, refreshToken } = generateAccessToken(
-    //   newUser.id,
-    //   newUser.email,
-    // );
-    // await prisma?.account.create({
-    //   data: {
-    //     access_token: accessToken as string,
-    //     refresh_token: refreshToken,
-    //     provider: "credential",
-    //     providerAccountId: newUser.id,
-    //     type: "credential",
-    //     userId: newUser.id,
-    //   },
-    // });
-    // console.log(accessToken, "accesstoken");
-    // const responce = NextResponse.json(
-    //   new ApiResponse(200, "user created", true, newUser),
-    //   {
-    //     status: 200,
-    //   },
-    // );
-    // console.log(responce);
-    // responce.cookies.set("access_token", accessToken, {
-    //   httpOnly: true,
-    //   secure: true,
-    // });
-    // return responce;
+    const newUser = await prismaClient.user.create({
+      data: {
+        name,
+        email,
+        passwrod: hashedPassword,
+        image: imageUrl,
+      },
+    });
+
+    if (!newUser) throw new ApiError(400, "something went wrong");
+
+    const { accessToken, refreshToken } = generateAccessToken(
+      newUser.id,
+      newUser.email,
+    );
+    await prisma?.account.create({
+      data: {
+        access_token: accessToken as string,
+        refresh_token: refreshToken,
+        provider: "credential",
+        providerAccountId: newUser.id,
+        type: "credential",
+        userId: newUser.id,
+      },
+    });
+
+    const responce = NextResponse.json(
+      new ApiResponse(200, "user created", true, newUser),
+      {
+        status: 200,
+      },
+    );
+
+    responce.cookies.set("access_token", accessToken, {
+      httpOnly: true,
+      secure: true,
+    });
+    return responce;
   } catch (error) {
+    // Agar custom details hain (e.g., Zod errors)
     console.log(error);
     return NextResponse.json(
-      new ApiResponse(400, "something went wrong", false, error),
+      new ApiResponse(400, "invalid data", false, error),
       {
         status: 400,
       },
     );
   }
-}
-
-export async function GET(req: NextRequest) {
-  Jwt.call(req);
-  return NextResponse.json({
-    message: "hello",
-  });
 }

@@ -1,5 +1,6 @@
 "use client";
 import { iconXVariants } from "@/motion/vairants";
+import { signupAxiso } from "@/utils/apicall";
 import {
   IconArrowLeft,
   IconArrowNarrowRightDashed,
@@ -11,14 +12,13 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import React, { useState } from "react";
 import { toast } from "sonner";
+import { AxiosErrorWithMessage } from "../../../types/axiosErrorType";
 import {
   UserInputError,
   UserInputTypeWithImage,
   userSchema,
 } from "../../../types/zod/userSchema";
 import Buttion from "./Buttion";
-import { signupAxiso } from "@/utils/apicall";
-import { AxiosErrorWithMessage } from "../../../types/axiosErrorType";
 
 type Props = {
   callback?: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -36,7 +36,6 @@ const MultiStepForm = ({ callback }: Props) => {
     image: null,
   });
 
-  console.log(loading);
   const [formError, setformError] = useState<UserInputError>({
     name: "",
     email: "",
@@ -70,18 +69,22 @@ const MultiStepForm = ({ callback }: Props) => {
       setstep((prev) => prev + 1);
     }
   };
-
   const handleChage = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     e.stopPropagation();
     const data = e.target;
     if (data.name === "image") {
-      const file = data.files![0];
-      const url = URL.createObjectURL(file);
-      setPrewImage(url);
-      setFormData((prev) => ({ ...prev, [data.name]: file }));
+      const file = data.files?.[0]; // File object lo
+      if (file) {
+        // Check: File { name: 'Screenshot...', type: 'image/png' }
+        const url = URL.createObjectURL(file); // Preview ke liye URL
+        setPrewImage(url);
+        setFormData((prev) => ({ ...prev, image: file })); // File object set karo
+      }
+    } else {
+      // Baki inputs ke liye value set karo
+      setFormData((prev) => ({ ...prev, [data.name]: data.value }));
     }
-    setFormData((prev) => ({ ...prev, [data.name]: data.value }));
   };
 
   const handlSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -113,19 +116,19 @@ const MultiStepForm = ({ callback }: Props) => {
       formdata.append("password", formData.password);
       formdata.append("conformPassword", formData.conformPassword);
       formdata.append("image", formData.image!);
-      const { data } = await signupAxiso.post("/signup", formdata, {
+      const data = await signupAxiso.post("/signup", formdata, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(data);
+      
       toast.success("account created successfully");
+      setLoading(false);
     } catch (e) {
       const error = e as AxiosErrorWithMessage;
-      console.log(error);
-      console.log(error.response?.data?.message);
-      if (error.response?.data?.message) {
-        toast.error(error.response?.data?.message);
+
+      if (error.response?.data?.data?.message) {
+        toast.error(error.response?.data?.data.message);
       } else {
         toast.error("something went wrong");
       }

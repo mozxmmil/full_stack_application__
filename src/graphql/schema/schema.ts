@@ -1,30 +1,18 @@
 // src/graphql/schema/schema.ts
 export const schema = `#graphql
 
-  scalar Date
 
-  type Image{
-    url:String
+type User {
+    id:String
+    name:String
+    email:String        
+    image:String    
     
   }
 
-  type Todo {
-    id:Int
-    title:String
-    description:String
-    status:String,
-    isCompleted:Boolean
-    createdAt:Date
-    image:Image
-  }
-  
   type Query {
-    getTodo(id:Int):Todo
+    getUser:User
   }
 
-  type Mutation {
-    createTodo(title:String,description:String):Todo
-    
-  }
   
 `;

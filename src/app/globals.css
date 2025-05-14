@@ -2,6 +2,7 @@
 
 @theme inline {
   --color-bgRoyel: #1a1a1a;
+  --color-white: #fff;
 }
 
 @layer utilities {
