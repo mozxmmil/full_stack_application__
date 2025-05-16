@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Buttion from "../ui/Buttion";
+import { signIn } from "next-auth/react";
 import {
   IconBrandAppleFilled,
   IconBrandGoogleFilled,
@@ -23,22 +24,28 @@ const Login_right = () => {
     setIsVisiblediv(!isVisible);
   };
 
+  const handleGoogleLogin = () => {
+    signIn("google", { callbackUrl: "/" });
+  };
   return (
-    <div className="flex max-h-full min-h-[50vh] w-full flex-col items-center justify-center gap-4 text-white md:items-start md:justify-start">
-      <h1 className="scale-y-90 transform text-6xl font-bold tracking-tighter capitalize sm:text-5xl md:text-8xl">
+    <div className="flex w-full flex-col items-center justify-center gap-4  text-white md:w-fit md:items-start md:justify-start">
+      <h1 className="scale-y-90 transform text-5xl font-bold tracking-tighter capitalize sm:text-6xl md:text-8xl">
         heppening now
       </h1>
-      <h1 className="mt-7 scale-y-75 transform text-start text-5xl font-bold text-gray-300">
+      <h1 className="mt-0 scale-y-75 transform text-start text-4xl font-bold text-gray-300 md:mt-7">
         join today.
       </h1>
-      <div className="min-h-60 w-90">
+      <div className="w-90  px-5 sm:px-0">
         <Buttion
+          onClick={handleGoogleLogin}
           className="bg-white font-medium hover:bg-neutral-200"
           title="Sign up with Google"
           icon={<IconBrandGoogleFilled />}
         />
         <Buttion
-          className="bg-white font-medium hover:bg-neutral-200"
+          locked={"yes"}
+          disabled
+          className="font-medium"
           title="Sign up with Apple"
           icon={<IconBrandAppleFilled />}
         />
@@ -52,14 +59,16 @@ const Login_right = () => {
           className="bg-blue-500 font-semibold text-white hover:bg-blue-600"
           title="Create Account"
         />
-        <p className="mt-5 text-[13px] leading-tight text-neutral-400">
+        <p className="mt-2 text-[10px] leading-tight text-neutral-400 sm:text-[13px]">
           By signing up, you agree to the{" "}
           <span className="text-blue-500">Terms of Service</span> and{" "}
           <span className="text-blue-500">Privacy Policy</span>, including{" "}
           <span className="text-blue-500">Cookie Use</span>.
         </p>
-        <div className="mt-15">
-          <h1 className="text-xl font-bold">Already have account?</h1>
+        <div className="mt-3  md:mt-15">
+          <h1 className="text-[15px] font-bold sm:text-xl">
+            Already have account?
+          </h1>
           <Link href={"signin"}>
             <Buttion
               title="Sign in"

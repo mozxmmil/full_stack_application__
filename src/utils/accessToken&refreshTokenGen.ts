@@ -1,4 +1,4 @@
-
+import * as jose from "jose";
 import { sign, SignOptions, verify } from "jsonwebtoken";
 import { ApiError } from "./apiHandler";
 
@@ -33,11 +33,26 @@ export function GetUserFromAccessToken(token: string) {
     throw new Error("Environment variable ACCESS_TOKEN or token is missing");
 
   try {
-    const secret = process.env.ACCESS_TOKEN! || "secret";
+    const secret = process.env.ACCESS_TOKEN!;
     const user = verify(token, secret);
     if (!user) throw new Error("Acesstoken Expire");
-    return user ;
+    return user;
   } catch (err) {
     throw new Error("invalid tokend");
+  }
+}
+export async function GetUserFromAccessTokenForMiddleware(token: string) {
+  if (!token || !process.env.ACCESS_TOKEN)
+    throw new Error("Environment variable ACCESS_TOKEN or token is missing");
+
+  try {
+    const secret = new TextEncoder().encode(process.env.ACCESS_TOKEN);
+    const { payload } = await jose.jwtVerify(token, secret, {
+      algorithms: ["HS256"], // Algorithm match karo
+    });
+    if (!payload) throw new Error("Access token expired");
+    return payload;
+  } catch (err) {
+    throw new Error("Invalid token");
   }
 }

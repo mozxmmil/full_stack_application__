@@ -5,7 +5,6 @@ import { schema } from "@/graphql/schema/schema";
 import { GetUserFromAccessToken } from "@/utils/accessToken&refreshTokenGen";
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
-import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
 const server = new ApolloServer({
@@ -16,7 +15,7 @@ const server = new ApolloServer({
 // ✅ Correct context function
 const context = async (req: NextRequest) => {
   const header = req.headers.get("Authorization")?.replace("Bearer", "").trim();
-
+    
   let user = null;
   if (header) {
     try {

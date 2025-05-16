@@ -15,9 +15,10 @@ const layout = ({ children }: Props) => {
         GeistSans.className,
       )}
     >
-      <SidebarLeft />
-      {children}
-      <RightSidebar />
+      
+        <SidebarLeft />
+        {children}
+        <RightSidebar />
      
     </main>
   );

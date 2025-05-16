@@ -1,9 +1,9 @@
-import {
-    QueryClientProvider,
-    useQueryClient
-} from "@tanstack/react-query";
+
+import TanstackProvider from "@/components/common/tanstackProvider";
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
+
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,12 +16,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const query = useQueryClient();
   return (
     <html lang="en">
       <body className="bg-black">
-        <QueryClientProvider client={query}>{children}</QueryClientProvider>
-        <Toaster />
+        
+          <TanstackProvider>
+            
+            {children}
+            </TanstackProvider>
+          <Toaster />
+        
       </body>
     </html>
   );

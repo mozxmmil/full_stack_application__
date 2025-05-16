@@ -1,6 +1,4 @@
-import { graphql } from "@/grl";
-
-
+import { graphql } from "@/gql";
 
 export const getCurrentUser = graphql(`
   #graphql

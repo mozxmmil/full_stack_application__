@@ -75,21 +75,20 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    const responeceUser = { id: newUser.id, accessToken, refreshToken };
     const responce = NextResponse.json(
-      new ApiResponse(200, "user created", true, newUser),
+      new ApiResponse(200, "user created", true, responeceUser),
       {
         status: 200,
       },
     );
-
+    
     responce.cookies.set("access_token", accessToken, {
       httpOnly: true,
       secure: true,
     });
     return responce;
   } catch (error) {
-    // Agar custom details hain (e.g., Zod errors)
-    console.log(error);
     return NextResponse.json(
       new ApiResponse(400, "invalid data", false, error),
       {

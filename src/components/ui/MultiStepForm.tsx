@@ -19,12 +19,16 @@ import {
   userSchema,
 } from "../../../types/zod/userSchema";
 import Buttion from "./Buttion";
+import { signupDataResponceType } from "../../../types/signupDataResponceType";
+import { useRouter } from "next/navigation";
+import { SetStorage } from "@/utils/setStorageIntoBrowser";
 
 type Props = {
   callback?: (e: React.MouseEvent<HTMLDivElement>) => void;
 };
 
 const MultiStepForm = ({ callback }: Props) => {
+  const router = useRouter();
   const [prewImage, setPrewImage] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [step, setstep] = useState<number>(1);
@@ -116,14 +120,21 @@ const MultiStepForm = ({ callback }: Props) => {
       formdata.append("password", formData.password);
       formdata.append("conformPassword", formData.conformPassword);
       formdata.append("image", formData.image!);
-      const data = await signupAxiso.post("/signup", formdata, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+      const data: signupDataResponceType = await signupAxiso.post(
+        "/signup",
+        formdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         },
-      });
-      
-      toast.success("account created successfully");
-      setLoading(false);
+      );
+      if (data.data.susscess) {
+        toast.success("account created successfully");
+        setLoading(false);
+        SetStorage.setLocalStorage("refreshToken", data.data.data.refreshToken);
+        router.push("/");
+      }
     } catch (e) {
       const error = e as AxiosErrorWithMessage;
 

@@ -7,6 +7,7 @@ import { ApiError } from "@/utils/apiHandler";
 import bcrypt from "bcrypt";
 import { prismaClient } from "@/utils/dbConnect";
 import { generateAccessToken } from "@/utils/accessToken&refreshTokenGen";
+import { cookies } from "next/headers";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prismaClient),
@@ -15,19 +16,12 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      authorization: {
-        params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code",
-        },
-      },
     }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { type: "email" },
-        password: { type: "password" },
+        email: { type: "email", name: "email" },
+        password: { type: "password", name: "password" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -66,14 +60,13 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/signin",
     // signOut: '/auth/signout',
-    error: "/auth/error",
+    error: "sigup",
     // verifyRequest: '/auth/verify-request',
     //
     //  newUser: '/auth/new-user'
   },
   callbacks: {
     async signIn({ user, account }) {
-      console.log(user);
       if (account?.provider === "google") {
         const userExists = await prismaClient.user.findUnique({
           where: { email: user.email },
@@ -99,7 +92,13 @@ export const authOptions: NextAuthOptions = {
 
           return true;
         }
-
+        const { accessToken, refreshToken } = generateAccessToken(
+          user.id,
+          user.email as string,
+        );
+        
+        account.access_token = accessToken;
+        account.refresh_token = refreshToken;
         return true;
       }
       if (account?.provider === "credentials") {
@@ -127,6 +126,11 @@ export const authOptions: NextAuthOptions = {
         token.refreshToken = account.refresh_token;
         token.id = account.providerAccountId;
         token.jwt = account.id_token;
+      }
+
+      if (account?.provider === "google") {
+        const cookie = await cookies();
+        cookie.set("access_token", account.access_token as string);
       }
 
       return token;

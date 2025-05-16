@@ -6,10 +6,9 @@ const TanstackProvider = ({ children }: { children: React.ReactNode }) => {
   const query = new QueryClient();
   return (
     <>
-      <QueryClientProvider client={query}>
-        {children}
-        
-      </QueryClientProvider>
+      
+        <QueryClientProvider client={query}>{children}</QueryClientProvider>
+      
     </>
   );
 };

@@ -12,13 +12,16 @@ import React, { useEffect, useState } from "react";
 import Buttion from "../ui/Buttion";
 import { signIn } from "next-auth/react";
 import { SigninInputType, signinSchema } from "../../../types/zod/signinSchema";
-
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 const SigninRightCard = () => {
+  const router = useRouter();
   const [step, setStep] = useState<number>(1);
   const [userData, setUserData] = useState<SigninInputType>({
     email: "",
     password: "",
   });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -42,6 +45,7 @@ const SigninRightCard = () => {
     e.preventDefault();
     e.stopPropagation();
     setLoading(true);
+
     const { success, data, error } = signinSchema.safeParse(userData);
 
     if (!success) {
@@ -54,12 +58,15 @@ const SigninRightCard = () => {
       setStep(1);
       return;
     }
-    console.log(data)
     const res = await signIn("credentials", {
+      ...data,
       redirect: false,
-      data,
     });
-    console.log(res);
+    if (res?.ok) {
+      setLoading(false);
+      toast.success("signIn susscess");
+      router.push("/");
+    }
     if (res?.error) {
       setError(res.error);
       setLoading(false);
@@ -70,23 +77,26 @@ const SigninRightCard = () => {
   useEffect(() => {}, []);
 
   return (
-    <div className="flex max-h-full min-h-[50vh] w-full flex-col items-center justify-center gap-4 text-white md:items-start md:justify-start">
-      <h1 className="scale-y-90 transform text-6xl font-bold tracking-tighter capitalize sm:text-5xl md:text-8xl">
+    <div className="flex max-h-full w-full  flex-col items-center justify-center gap-2 text-white md:items-start md:justify-start md:gap-4">
+      <h1 className="scale-y-90 transform text-5xl font-bold tracking-tighter capitalize sm:text-6xl md:scale-y-75 md:text-8xl">
         heppening now
       </h1>
-      <h1 className="mt-7 scale-y-75 transform text-start text-5xl font-bold text-gray-300">
+      <h1 className="mt-1 scale-y-75 transform text-start text-4xl font-bold text-gray-300 md:mt-5 md:text-5xl">
         join today.
       </h1>
-      <div className="min-h-60 w-90">
+      <div className="min-h-60 w-90 px-5 sm:px-0">
         <Buttion
+          onClick={() => signIn("google", { callbackUrl: "/" })}
           className="bg-white font-medium hover:bg-neutral-200"
           title="Sign up with Google"
           icon={<IconBrandGoogleFilled />}
         />
         <Buttion
-          className="bg-white font-medium hover:bg-neutral-200"
+          className="relative font-medium"
           title="Sign up with Apple"
           icon={<IconBrandAppleFilled />}
+          disabled
+          locked={"yes"}
         />
         <div className="mt-5 flex items-center justify-between">
           <div className="h-[1px] w-full bg-neutral-500" />
@@ -156,14 +166,16 @@ const SigninRightCard = () => {
             />
           )}
         </form>
-        <p className="mt-2 text-[13px] leading-tight text-neutral-400">
+        <p className="mt-2 text-[10px] leading-tight text-neutral-400 sm:text-[13px]">
           By signing up, you agree to the{" "}
           <span className="text-blue-500">Terms of Service</span> and{" "}
           <span className="text-blue-500">Privacy Policy</span>, including{" "}
           <span className="text-blue-500">Cookie Use</span>.
         </p>
         <div className="mt-2">
-          <h1 className="text-xl font-bold">Don&apos;t have account </h1>
+          <h1 className="text-[15px] font-bold sm:text-xl">
+            Don&apos;t have account{" "}
+          </h1>
           <Link href={"signup"}>
             <Buttion
               title="Sign Up"
