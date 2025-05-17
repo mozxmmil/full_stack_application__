@@ -28,14 +28,14 @@ const Login_right = () => {
     signIn("google", { callbackUrl: "/" });
   };
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-4  text-white md:w-fit md:items-start md:justify-start">
+    <div className="flex w-full flex-col items-center justify-center gap-4 text-white md:w-fit md:items-start md:justify-start">
       <h1 className="scale-y-90 transform text-5xl font-bold tracking-tighter capitalize sm:text-6xl md:text-8xl">
         heppening now
       </h1>
       <h1 className="mt-0 scale-y-75 transform text-start text-4xl font-bold text-gray-300 md:mt-7">
         join today.
       </h1>
-      <div className="w-90  px-5 sm:px-0">
+      <div className="w-90 px-5 sm:px-0">
         <Buttion
           onClick={handleGoogleLogin}
           className="bg-white font-medium hover:bg-neutral-200"
@@ -65,7 +65,7 @@ const Login_right = () => {
           <span className="text-blue-500">Privacy Policy</span>, including{" "}
           <span className="text-blue-500">Cookie Use</span>.
         </p>
-        <div className="mt-3  md:mt-15">
+        <div className="mt-3 md:mt-15">
           <h1 className="text-[15px] font-bold sm:text-xl">
             Already have account?
           </h1>
@@ -78,7 +78,7 @@ const Login_right = () => {
         </div>
       </div>
       {isVisiblediv && (
-        <div className="absolute inset-0 flex h-screen w-full items-center justify-center bg-[rgba(51,42,42,0.31)]">
+        <div className="absolute inset-0 flex h-svh w-full items-center justify-center md:h-screen md:bg-[rgba(51,42,42,0.31)]">
           <ClickoutsideCloser callBack={handleCallback}>
             <MultiStepForm callback={handleClickInputField} />
           </ClickoutsideCloser>

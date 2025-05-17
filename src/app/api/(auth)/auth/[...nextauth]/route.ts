@@ -58,9 +58,9 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/signin",
     // signOut: '/auth/signout',
-    error: "sigup",
+    error: "/sigup",
     // verifyRequest: '/auth/verify-request',
     //
     //  newUser: '/auth/new-user'
@@ -96,7 +96,7 @@ export const authOptions: NextAuthOptions = {
           user.id,
           user.email as string,
         );
-        
+
         account.access_token = accessToken;
         account.refresh_token = refreshToken;
         return true;
@@ -130,7 +130,19 @@ export const authOptions: NextAuthOptions = {
 
       if (account?.provider === "google") {
         const cookie = await cookies();
-        cookie.set("access_token", account.access_token as string);
+        cookie.set("access_token", account.access_token as string, {
+          path: "/",
+          secure: false,
+          httpOnly: true,
+        });
+      }
+      if (account?.provider === "credentials") {
+        const cookie = await cookies();
+        cookie.set("access_token", account.access_token as string, {
+          path: "/",
+          secure: false,
+          httpOnly: true,
+        });
       }
 
       return token;

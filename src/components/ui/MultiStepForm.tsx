@@ -121,14 +121,16 @@ const MultiStepForm = ({ callback }: Props) => {
       formdata.append("conformPassword", formData.conformPassword);
       formdata.append("image", formData.image!);
       const data: signupDataResponceType = await signupAxiso.post(
-        "/signup",
+        "/api/signup",
         formdata,
         {
           headers: {
             "Content-Type": "multipart/form-data",
+
           },
         },
       );
+      
       if (data.data.susscess) {
         toast.success("account created successfully");
         setLoading(false);
@@ -137,9 +139,11 @@ const MultiStepForm = ({ callback }: Props) => {
       }
     } catch (e) {
       const error = e as AxiosErrorWithMessage;
-
+      console.log(error);
       if (error.response?.data?.data?.message) {
         toast.error(error.response?.data?.data.message);
+      } else if (error.message) {
+        toast.error(error.message);
       } else {
         toast.error("something went wrong");
       }
@@ -155,22 +159,24 @@ const MultiStepForm = ({ callback }: Props) => {
     }
   };
   return (
-    <div className="relative w-xl space-y-5 rounded-lg bg-black p-6 text-white">
+    <div className="relative h-svh w-svw space-y-5 rounded-lg bg-black p-6 text-white md:h-fit md:w-xl">
       <motion.div
         onClick={handleCloseDialogBox}
         variants={iconXVariants}
         whileHover={"hover"}
-        className="absolute top-7 right-7 hover:cursor-pointer"
+        className="absolute top-7 right-3 hover:cursor-pointer md:right-7"
       >
         <IconX className="size-7" />
       </motion.div>
-      <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold text-white">Create your account</h1>
+      <div className="mt-14 space-y-2 text-center md:mt-10">
+        <h1 className="text-xl font-bold text-white md:text-3xl">
+          Create your account
+        </h1>
         <span className="text-sm font-semibold text-gray-500">
           step {step} of 2
         </span>
       </div>
-      <form onSubmit={handlSubmit} className="space-y-10 p-5">
+      <form onSubmit={handlSubmit} className="space-y-10 md:p-5">
         {step === 1 ? (
           <div className="space-y-5">
             <div className="flex flex-col">

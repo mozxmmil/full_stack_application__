@@ -1,8 +1,6 @@
-
 import TanstackProvider from "@/components/common/tanstackProvider";
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
-
 
 import "./globals.css";
 
@@ -19,13 +17,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-black">
-        
-          <TanstackProvider>
-            
-            {children}
-            </TanstackProvider>
-          <Toaster />
-        
+        <TanstackProvider>{children}</TanstackProvider>
+        <Toaster />
       </body>
     </html>
   );

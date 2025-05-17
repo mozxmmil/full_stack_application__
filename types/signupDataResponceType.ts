@@ -12,3 +12,4 @@ export interface signupDataResponceType {
     susscess: boolean;
  } // Note: "susscess" spelling galat hai, "success" honi chahiye
 }
+

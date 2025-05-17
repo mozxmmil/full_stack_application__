@@ -43,6 +43,39 @@ export const SideBarItem: SideBarListProps[] = [
   {
     title: "More",
     icon: <IconDotsCircleHorizontal className="size-7 text-white" />,
-    link: "/#",
+    link: "#",
+  },
+];
+
+export const BottomItem: SideBarListProps[] = [
+  {
+    title: "Home",
+    icon: <IconHome className="size-7 text-white" />,
+    link: "/",
+    isNotification: false,
+  },
+  {
+    title: "Explore",
+    icon: <IconHash className="size-7 text-white" />,
+    link: "/explore",
+    isNotification: false,
+  },
+  {
+    title: "Notification",
+    icon: <IconBell className="size-7 text-white" />,
+    link: "/notification",
+    isNotification: true,
+  },
+  {
+    title: "Profile",
+    icon: <IconUserFilled className="size-7 text-white" />,
+    link: "/profile",
+    isNotification: false,
+  },
+  {
+    title: "More",
+    icon: <IconDotsCircleHorizontal className="size-7 text-white" />,
+    link: "#",
+    isNotification: false,
   },
 ];

@@ -82,10 +82,13 @@ export async function POST(req: NextRequest) {
         status: 200,
       },
     );
-    
+
     responce.cookies.set("access_token", accessToken, {
       httpOnly: true,
-      secure: true,
+      secure: false,
+      sameSite: "lax",
+      path: "/",
+      maxAge: 3600,
     });
     return responce;
   } catch (error) {
