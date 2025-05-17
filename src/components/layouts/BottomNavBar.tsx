@@ -1,7 +1,7 @@
 "use client";
 import { BottomItem } from "@/utils/item_leftSideBar";
 import Link from "next/link";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { SideBarListProps } from "../../../types/leftSideBar";
 import ClickoutsideCloser from "../common/clickOutsideCloser";
 import { signupAxiso } from "@/utils/apicall";
@@ -13,8 +13,8 @@ const BottomNavBar = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [loading, setloading] = useState(false);
-  const handleclicked = (arg: boolean) => {
-    setIsOpen(!arg);
+  const handleclicked = () => {
+    setIsOpen(!isOpen);
   };
 
   const handleLogout = async (e: React.MouseEvent<HTMLSpanElement>) => {
@@ -43,7 +43,7 @@ const BottomNavBar = () => {
                 <Link href={"/communities"}>Communities</Link>
                 <span
                   onClick={handleLogout}
-                  className="flex items-center justify-start text-red-500 gap-2"
+                  className="flex items-center justify-start gap-2 text-red-500"
                 >
                   Log-Out{" "}
                   {loading && <IconLoader className="size-4 text-white" />}
