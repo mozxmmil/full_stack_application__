@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { IconLockSquareRoundedFilled } from "@tabler/icons-react";
 
 const buttonVariants = cva(
-  "mt-5 flex w-full items-center justify-center gap-3 rounded-full bg-[#D7DBDC] px-4 py-2 text-xl font-bold text-black hover:cursor-pointer  relative",
+  "md:mt-5 mt-0 flex w-full items-center justify-center gap-3 rounded-full bg-[#D7DBDC] px-4 py-2 text-xl font-bold text-black hover:cursor-pointer  relative",
   {
     variants: {
       locked: {

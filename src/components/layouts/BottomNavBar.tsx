@@ -29,7 +29,7 @@ const BottomNavBar = () => {
   };
 
   return (
-    <footer className="absolute bottom-0 left-0 block w-screen bg-black p-2 md:hidden">
+    <footer className="fixed bottom-0 left-0 block w-screen bg-black p-2 md:hidden">
       <div className="relative">
         <div className="flex items-center justify-between p-2">
           {BottomItem.map((item, inx) => (
