@@ -8,21 +8,12 @@ import {
 } from "@tabler/icons-react";
 import Image from "next/image";
 import React from "react";
+import ProfileComponents from "../ui/profileComponet";
 
 const TwittCard = () => {
   return (
     <div className="flex min-h-40 w-full gap-3 divide-y p-4 text-white">
-      <div className="size-12 shrink-0 overflow-hidden rounded-full bg-green-500">
-        <Image
-          src={
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX4wVGjMQ37PaO4PdUVEAliSLi8-c2gJ1zvQ&s"
-          }
-          alt="profile"
-          className="h-full w-full object-cover"
-          width={50}
-          height={50}
-        />
-      </div>
+      <ProfileComponents href={"/profile"} />
 
       <div className="flex flex-col gap-3">
         <div className="top flex gap-2">

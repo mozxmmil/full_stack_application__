@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-import { ApiError } from "@/utils/apiHandler";
+import { ApiError, ApiResponse } from "@/utils/apiHandler";
 import bcrypt from "bcrypt";
 import { prismaClient } from "@/utils/dbConnect";
 import { generateAccessToken } from "@/utils/accessToken&refreshTokenGen";
@@ -38,8 +38,8 @@ export const authOptions: NextAuthOptions = {
           }
 
           const passwordMatch = await bcrypt.compare(
-            credentials.password,
-            user.passwrod!,
+            credentials.password ,
+            user.password! ,
           );
 
           if (!passwordMatch) {
@@ -52,7 +52,8 @@ export const authOptions: NextAuthOptions = {
             name: user.name ?? undefined,
           };
         } catch (error) {
-          throw new ApiError(500, "Internal server error", error);
+          
+          throw new ApiResponse(500, "something Wrong", false, error);
         }
       },
     }),

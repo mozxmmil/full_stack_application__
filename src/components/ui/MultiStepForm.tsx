@@ -303,7 +303,7 @@ const MultiStepForm = ({ callback }: Props) => {
             </div>
             <div className="flex flex-col items-center justify-between sm:flex-row">
               <Buttion
-                className="w-full px-7 text-base font-medium sm:max-w-fit"
+                className="w-full px-7 text-base font-medium sm:max-w-fit mt-5"
                 title="Back"
                 icon={
                   <div className="size-5">
@@ -315,7 +315,7 @@ const MultiStepForm = ({ callback }: Props) => {
               <Buttion
                 title="Sign Up"
                 type="submit"
-                className="w-full flex-row-reverse text-base font-medium sm:w-fit"
+                className="w-full flex-row-reverse text-base font-medium sm:w-fit mt-5"
                 icon={
                   <div>
                     {loading ? (

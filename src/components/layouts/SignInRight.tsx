@@ -77,7 +77,7 @@ const SigninRightCard = () => {
   useEffect(() => {}, []);
 
   return (
-    <div className="flex max-h-full w-full  flex-col items-center justify-center gap-2 text-white md:items-start md:justify-start md:gap-4">
+    <div className="flex max-h-full w-full flex-col items-center justify-center gap-2 text-white md:items-start md:justify-start md:gap-4">
       <h1 className="scale-y-90 transform text-5xl font-bold tracking-tighter capitalize sm:text-6xl md:scale-y-75 md:text-8xl">
         heppening now
       </h1>
@@ -87,12 +87,12 @@ const SigninRightCard = () => {
       <div className="min-h-60 w-90 px-5 sm:px-0">
         <Buttion
           onClick={() => signIn("google", { callbackUrl: "/" })}
-          className="bg-white font-medium hover:bg-neutral-200 mt-5"
+          className="mt-5 bg-white font-medium hover:bg-neutral-200"
           title="Sign up with Google"
           icon={<IconBrandGoogleFilled />}
         />
         <Buttion
-          className="relative font-medium mt-5"
+          className="relative mt-5 font-medium"
           title="Sign up with Apple"
           icon={<IconBrandAppleFilled />}
           disabled
@@ -117,7 +117,7 @@ const SigninRightCard = () => {
                 onChange={handleChange}
                 value={userData?.email}
                 className="h-full w-full shrink-0 rounded-md border-none p-3 focus:outline-blue-600"
-                type="text"
+                type="email"
                 placeholder="Email or UserId"
                 name="email"
                 tabIndex={-1}
@@ -138,7 +138,7 @@ const SigninRightCard = () => {
           {step !== 1 ? (
             <Buttion
               title="Sign in"
-              className="flex flex-row-reverse mt-5"
+              className="mt-5 flex flex-row-reverse"
               type="submit"
               icon={
                 <div>
@@ -155,7 +155,7 @@ const SigninRightCard = () => {
               onClick={handStepIncrease}
               title={"Next"}
               type="button"
-              className="flex flex-row-reverse mt-5"
+              className="mt-5 flex flex-row-reverse"
               icon={
                 <div>
                   {step === 1 && (
@@ -179,7 +179,7 @@ const SigninRightCard = () => {
           <Link href={"signup"}>
             <Buttion
               title="Sign Up"
-              className="border border-neutral-400 bg-transparent text-blue-500 hover:bg-[rgba(33,150,243,0.15)] mt-5"
+              className="mt-5 border border-neutral-400 bg-transparent text-blue-500 hover:bg-[rgba(33,150,243,0.15)]"
             />
           </Link>
         </div>

@@ -1,10 +1,11 @@
+import Header from "@/components/layouts/headerButton";
 import TwittCard from "@/components/layouts/TwittCard";
 import TwittCreater from "@/components/layouts/TwittCreater";
-import React from "react";
 
-const page = () => {
+const MainPage = () => {
   return (
     <section className="hideScrollbar col-span-full divide-y divide-neutral-400 overflow-y-auto border-none border-neutral-500 sm:border-x md:col-span-6">
+      <Header />
       <TwittCreater />
       <TwittCard />
       <TwittCard />
@@ -13,4 +14,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default MainPage;

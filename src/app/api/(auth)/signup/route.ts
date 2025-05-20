@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
       data: {
         name,
         email,
-        passwrod: hashedPassword,
+        password: hashedPassword,
         image: imageUrl,
       },
     });

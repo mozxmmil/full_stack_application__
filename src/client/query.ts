@@ -6,9 +6,7 @@ export const graphqlClient = new GraphQLClient(
   "http://localhost:3000/api/graphql",
   {
     headers: () => ({
-      Authorization: isClient
-        ? `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjbWFudXI0Z3IwMDAwdmxrY2xvN3hkYnJwIiwiZW1haWwiOiJtZG1vemFtbWlsNjA1QGdtYWlsLmNvbSIsImlhdCI6MTc0NzIyMTgwOSwiZXhwIjoxNzQ3MjgxODA5fQ.7IyyjZGhHIZzDQ0LDDKdRiZV8IIGYbesISzt7ZYozX8`
-        : "",
+      Authorization: isClient ? `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjbWF3bW4xM2cwMDAwdmxsZ3RsN3o5OHl6IiwiZW1haWwiOiJhbmt1c2hAZ21haWwuY29tIiwiaWF0IjoxNzQ3NzUzNDA1LCJleHAiOjE3NDc4MTM0MDV9.-AWR75NssEnS3Shqmnii9c70bX_WbMRRhUqY-WrwwEE` : "",
     }),
   },
 );

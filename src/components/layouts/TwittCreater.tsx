@@ -1,20 +1,22 @@
 "use client";
+import { signupAxiso } from "@/utils/apicall";
 import { IconGif, IconMoodEmpty } from "@tabler/icons-react";
-import EmojiPicker, { EmojiClickData, EmojiStyle } from "emoji-picker-react";
-import Buttion from "../ui/Buttion";
-import ImageInput from "../ui/imageInput";
-import ProfileComponents from "../ui/profileComponet";
-import React, { Suspense, useRef, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
+import React, { use, useRef, useState } from "react";
+import { createTwitterErrorType } from "../../../types/error";
 import {
   crateTwittDataSchema,
   CreateTwittDataType,
 } from "../../../types/zod/createTwittSchema";
 import ClickoutsideCloser from "../common/clickOutsideCloser";
-import { createTwitterErrorType } from "../../../types/error";
-import { useMutation } from "@tanstack/react-query";
-import { signupAxiso } from "@/utils/apicall";
+import Buttion from "../ui/Buttion";
+import ImageInput from "../ui/imageInput";
+import ProfileComponents from "../ui/profileComponet";
+import { useCurrentUser } from "@/zustand/currentUser";
 
 const TwittCreater = () => {
+  const user = useCurrentUser((state) => state.user);
   const rf = useRef<HTMLInputElement | null>(null);
   const [CreateTwittData, setCreateTwittData] = useState<CreateTwittDataType>({
     data: "",
@@ -34,6 +36,7 @@ const TwittCreater = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     e.preventDefault();
+    e.stopPropagation();
     const data = e.target;
     if (data.name === "image" && data instanceof HTMLInputElement) {
       const files = data.files;
@@ -67,15 +70,13 @@ const TwittCreater = () => {
         },
       });
     },
-    
-
   });
-  console.log(mutation);
-  console.log(mutation.isPending);
+
+  //   console.log(mutation);
   const hanleSumbit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { success, error } = crateTwittDataSchema.safeParse(CreateTwittData);
-    console.log(error?.errors);
+
     if (!success) {
       error.errors.map((message) =>
         seterror((prev) => ({ ...prev, [message.path[0]]: message.message })),
@@ -93,7 +94,7 @@ const TwittCreater = () => {
   };
   return (
     <div className="flex min-h-40 w-full gap-3 p-4 text-white">
-      <ProfileComponents href={"/profile"} />{" "}
+      <ProfileComponents href={"/profile"} image={user?.image} />{" "}
       {/* todo: yaha pe mujhe profile ka link dalna hai  */}
       <form
         onSubmit={hanleSumbit}

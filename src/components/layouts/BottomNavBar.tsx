@@ -67,7 +67,7 @@ const BottomIconComponent = ({
   fun,
 }: SideBarListProps) => {
   const handleClicked = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    console.log(title);
+    
     if (title === "More") {
       e.preventDefault();
       if (fun) fun();
