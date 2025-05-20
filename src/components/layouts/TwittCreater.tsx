@@ -63,14 +63,16 @@ const TwittCreater = () => {
     mutationFn: (data: FormData) => {
       return signupAxiso.post("api/crateTwitt", data, {
         headers: {
-          [" Content-Type"]: "multipart/form-data",
+          ["Content-Type"]: "multipart/form-data",
         },
       });
     },
+    
+
   });
   console.log(mutation);
   console.log(mutation.isPending);
-  const hanleSumbit = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const hanleSumbit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { success, error } = crateTwittDataSchema.safeParse(CreateTwittData);
     console.log(error?.errors);

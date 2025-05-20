@@ -38,14 +38,14 @@ const Login_right = () => {
       <div className="w-90 px-5 sm:px-0">
         <Buttion
           onClick={handleGoogleLogin}
-          className="bg-white font-medium hover:bg-neutral-200"
+          className="bg-white font-medium hover:bg-neutral-200 mt-5"
           title="Sign up with Google"
           icon={<IconBrandGoogleFilled />}
         />
         <Buttion
           locked={"yes"}
           disabled
-          className="font-medium"
+          className="font-medium mt-5"
           title="Sign up with Apple"
           icon={<IconBrandAppleFilled />}
         />
@@ -56,7 +56,7 @@ const Login_right = () => {
         </div>
         <Buttion
           onClick={handleClickInputField}
-          className="bg-blue-500 font-semibold text-white hover:bg-blue-600"
+          className="bg-blue-500 font-semibold text-white hover:bg-blue-600 mt-5"
           title="Create Account"
         />
         <p className="mt-2 text-[10px] leading-tight text-neutral-400 sm:text-[13px]">
@@ -72,7 +72,7 @@ const Login_right = () => {
           <Link href={"signin"}>
             <Buttion
               title="Sign in"
-              className="border border-neutral-400 bg-transparent text-blue-500 hover:bg-[rgba(33,150,243,0.15)]"
+              className="border border-neutral-400 bg-transparent text-blue-500 hover:bg-[rgba(33,150,243,0.15)] mt-5"
             />
           </Link>
         </div>

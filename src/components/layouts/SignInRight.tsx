@@ -87,12 +87,12 @@ const SigninRightCard = () => {
       <div className="min-h-60 w-90 px-5 sm:px-0">
         <Buttion
           onClick={() => signIn("google", { callbackUrl: "/" })}
-          className="bg-white font-medium hover:bg-neutral-200"
+          className="bg-white font-medium hover:bg-neutral-200 mt-5"
           title="Sign up with Google"
           icon={<IconBrandGoogleFilled />}
         />
         <Buttion
-          className="relative font-medium"
+          className="relative font-medium mt-5"
           title="Sign up with Apple"
           icon={<IconBrandAppleFilled />}
           disabled
@@ -138,7 +138,7 @@ const SigninRightCard = () => {
           {step !== 1 ? (
             <Buttion
               title="Sign in"
-              className="flex flex-row-reverse"
+              className="flex flex-row-reverse mt-5"
               type="submit"
               icon={
                 <div>
@@ -155,7 +155,7 @@ const SigninRightCard = () => {
               onClick={handStepIncrease}
               title={"Next"}
               type="button"
-              className="flex flex-row-reverse"
+              className="flex flex-row-reverse mt-5"
               icon={
                 <div>
                   {step === 1 && (
@@ -179,7 +179,7 @@ const SigninRightCard = () => {
           <Link href={"signup"}>
             <Buttion
               title="Sign Up"
-              className="border border-neutral-400 bg-transparent text-blue-500 hover:bg-[rgba(33,150,243,0.15)]"
+              className="border border-neutral-400 bg-transparent text-blue-500 hover:bg-[rgba(33,150,243,0.15)] mt-5"
             />
           </Link>
         </div>
