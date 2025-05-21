@@ -17,6 +17,7 @@ export const createTwittHandler = async (
 ) => {
   if (!cnx.user?.userId) throw new Error("user not Authorization");
   const { data, image } = payload;
+
   const createTwitt = await prismaClient.twitt.create({
     data: {
       twitt: data,
@@ -26,4 +27,19 @@ export const createTwittHandler = async (
   });
   if (!createTwitt) throw new Error("try again");
   return createTwitt;
+};
+
+export const getTwittsHandler = async (_: any, __: any, cnx: TokenType) => {
+ 
+  if (!cnx.user) {
+    throw new Error("user not Authorization");
+  }
+  const twitts = await prismaClient.twitt.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+  
+  if (!twitts) throw new Error("try again");
+  return twitts;
 };

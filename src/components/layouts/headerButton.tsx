@@ -1,62 +1,39 @@
 "use client";
-import { graphqlClient } from "@/client/query";
-import { getCurrentUser } from "@/graphql/client/query/getUser";
+import { useGetCurrentUser } from "@/hook/useTwitt";
 import { cn } from "@/utils/cn";
-import { useCurrentUser } from "@/zustand/currentUser";
-import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import { useTwitterAccount } from "@/zustand/twitterAccount";
 
 const Header = () => {
-  const setUser = useCurrentUser((state) => state.setUser);
-  const handleClicked = () => {
-    setIsFollowing(!isFollowing);
-  };
-  const [isFollowing, setIsFollowing] = useState(true);
+   useGetCurrentUser();
+  
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["currentUser"],
-    queryFn: () => graphqlClient.request(getCurrentUser),
-    enabled: isFollowing,
-  });
-  if (
-    data?.getUser &&
-    data.getUser.id &&
-    data.getUser.name &&
-    data.getUser.email &&
-    data.getUser.image
-  ) {
-    setUser({
-      id: data.getUser.id,
-      name: data.getUser.name,
-      email: data.getUser.email,
-      image: data.getUser.image,
-    });
-  }
-  //   console.log(error?.message);
+  const { isFollowing, setIsFollowing } = useTwitterAccount((state) => state);
+  
+
   return (
     <div className="sticky top-0 z-50 flex items-center justify-around bg-black text-white *:cursor-pointer *:p-5 *:font-medium">
       <button
         className={cn(
           "relative flex w-full items-center justify-center text-neutral-500",
-          isFollowing && "text-white",
+          !isFollowing && "text-white",
         )}
-        onClick={handleClicked}
+        onClick={() => setIsFollowing(false)}
       >
         For you
-        {isFollowing && (
+        {!isFollowing && (
           <div className="absolute bottom-0 left-0 h-[3px] w-full bg-blue-600"></div>
         )}
       </button>
       <button
         className={cn(
-          "relative flex w-full items-center justify-center text-neutral-500",
-          !isFollowing && "text-white",
+          "relative flex w-full items-center justify-center border-none text-neutral-500 outline-none",
+          isFollowing && "text-white",
         )}
-        onClick={handleClicked}
+        onClick={() => setIsFollowing(true)}
       >
         Following
-        {!isFollowing && (
-          <div className="absolute bottom-0 left-0 h-[3px] w-full bg-blue-600"></div>
+        {isFollowing && (
+          <div className="absolute bottom-0 left-0 h-[3px] w-full bg-blue-600 outline-none"></div>
         )}
       </button>
     </div>

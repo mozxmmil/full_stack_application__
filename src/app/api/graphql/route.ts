@@ -15,7 +15,7 @@ const server = new ApolloServer({
 // ✅ Correct context function
 const context = async (req: NextRequest) => {
   const header = req.headers.get("Authorization")?.replace("Bearer", "").trim();
-    
+
   let user = null;
   if (header) {
     try {

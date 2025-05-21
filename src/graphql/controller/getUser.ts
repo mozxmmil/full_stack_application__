@@ -14,5 +14,3 @@ export const getUserHandler = async (_: any, arg: any, context: TokenType) => {
   if (!loggedInUser) throw new Error("user not found");
   return loggedInUser;
 };
-
-

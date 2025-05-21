@@ -105,7 +105,7 @@ const MultiStepForm = ({ callback }: Props) => {
       return;
     }
 
-    if (formData.image === null) {
+    if (formData.image === null && formData.image === undefined) {
       setformError((prev) => ({
         ...prev,
         image: "please select image",
@@ -126,11 +126,10 @@ const MultiStepForm = ({ callback }: Props) => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-
           },
         },
       );
-      
+
       if (data.data.susscess) {
         toast.success("account created successfully");
         setLoading(false);
@@ -139,7 +138,7 @@ const MultiStepForm = ({ callback }: Props) => {
       }
     } catch (e) {
       const error = e as AxiosErrorWithMessage;
-      console.log(error);
+      
       if (error.response?.data?.data?.message) {
         toast.error(error.response?.data?.data.message);
       } else if (error.message) {
@@ -303,7 +302,7 @@ const MultiStepForm = ({ callback }: Props) => {
             </div>
             <div className="flex flex-col items-center justify-between sm:flex-row">
               <Buttion
-                className="w-full px-7 text-base font-medium sm:max-w-fit mt-5"
+                className="mt-5 w-full px-7 text-base font-medium sm:max-w-fit"
                 title="Back"
                 icon={
                   <div className="size-5">
@@ -315,7 +314,7 @@ const MultiStepForm = ({ callback }: Props) => {
               <Buttion
                 title="Sign Up"
                 type="submit"
-                className="w-full flex-row-reverse text-base font-medium sm:w-fit mt-5"
+                className="mt-5 w-full flex-row-reverse text-base font-medium sm:w-fit"
                 icon={
                   <div>
                     {loading ? (

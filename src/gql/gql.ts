@@ -14,9 +14,11 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
+    "\n  #graphql\n  query getAllTwitts {\n    getTwitts {\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n": typeof types.GetAllTwittsDocument,
     "\n  #graphql\n\n  query GetUser {\n    getUser {\n      image\n      name\n      id\n      email\n    }\n  }\n": typeof types.GetUserDocument,
 };
 const documents: Documents = {
+    "\n  #graphql\n  query getAllTwitts {\n    getTwitts {\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n": types.GetAllTwittsDocument,
     "\n  #graphql\n\n  query GetUser {\n    getUser {\n      image\n      name\n      id\n      email\n    }\n  }\n": types.GetUserDocument,
 };
 
@@ -34,6 +36,10 @@ const documents: Documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  #graphql\n  query getAllTwitts {\n    getTwitts {\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  #graphql\n  query getAllTwitts {\n    getTwitts {\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

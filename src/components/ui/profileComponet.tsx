@@ -4,7 +4,7 @@ import Link, { LinkProps } from "next/link";
 import React, { HTMLAttributes } from "react";
 
 interface Props extends LinkProps, HTMLAttributes<HTMLAnchorElement> {
-  image?: string;
+  image?: string | null;
 }
 
 const ProfileComponents = ({ image, className, ...props }: Props) => {

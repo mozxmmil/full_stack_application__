@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
     "http://192.168.253.215:3000",
     "192.168.7.215",
     "192.168.253.215",
+    "172.17.176.1",
   ],
   async headers() {
     return [
@@ -54,6 +55,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
 };
 
 export default nextConfig;

@@ -1,10 +1,14 @@
 // src/graphql/schema/schema.ts
 export const schema = `#graphql
 
+scalar DateTime
+
 type Twitt {
     id:String
     twitt:String!
     image:String
+    updatedAt:DateTime
+    createdAt:DateTime
     userId:User
     
 }
@@ -20,6 +24,7 @@ type User {
 
   type Query {
     getUser:User
+    getTwitts:[Twitt]
   }
 
 input TwittPayload {

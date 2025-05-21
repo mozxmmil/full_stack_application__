@@ -6,13 +6,15 @@ export const middleware = async (req: NextRequest) => {
   const responce = NextResponse.next();
   const url = req.nextUrl.pathname;
 
-  if ((url === "/signin" || url === "/signup") && !cookieRes) {
+  if (req.nextUrl.pathname.startsWith("/api/")) {
+    responce.headers.set("Authorization", `Bearer ${cookieRes}`);
     return responce;
   }
-  if ((url === "/signin" || url === "/signup") && cookieRes) {
+
+  if (["/signin", "signup"].includes(url)) {
+    if (!cookieRes) return responce;
     return NextResponse.redirect(new URL("/", req.url));
   }
-
   if (["/", "/profile", "/explore"].includes(url)) {
     if (!cookieRes) {
       return NextResponse.redirect(new URL("/signup", req.url));
@@ -26,5 +28,5 @@ export const middleware = async (req: NextRequest) => {
 };
 
 export const config = {
-  matcher: ["/profile", "/", "/explore", "/signup", "/signin"],
+  matcher: ["/profile", "/", "/explore", "/signup", "/signin", "/api/:path*"],
 };
