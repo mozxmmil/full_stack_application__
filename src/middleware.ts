@@ -11,7 +11,7 @@ export const middleware = async (req: NextRequest) => {
     return responce;
   }
 
-  if (["/signin", "signup"].includes(url)) {
+  if (["/signin", "/signup"].includes(url)) {
     if (!cookieRes) return responce;
     return NextResponse.redirect(new URL("/", req.url));
   }

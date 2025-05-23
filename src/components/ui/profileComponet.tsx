@@ -1,7 +1,7 @@
 import { cn } from "@/utils/cn";
 import Image from "next/image";
 import Link, { LinkProps } from "next/link";
-import React, { HTMLAttributes, useState } from "react";
+import { HTMLAttributes } from "react";
 
 interface Props extends LinkProps, HTMLAttributes<HTMLAnchorElement> {
   image?: string | null;

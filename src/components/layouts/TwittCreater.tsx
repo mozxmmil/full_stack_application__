@@ -29,7 +29,7 @@ const TwittCreater = () => {
       data: "",
       image: "",
     });
-  console.log(CreateTwittData);
+
   const [error, seterror] = useState<createTwitterErrorType>({
     data: "",
     image: "",
@@ -45,7 +45,7 @@ const TwittCreater = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const data = e.target;
-    console.log(data.name);
+
     if (data.name === "image" && data instanceof HTMLInputElement) {
       const files = data.files;
       if (files && files.length > 0) {
@@ -92,7 +92,6 @@ const TwittCreater = () => {
     }
   };
 
-  //   console.log(mutation);
   const hanleSumbit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { success, error } = crateTwittDataSchema.safeParse(CreateTwittData);
@@ -103,14 +102,12 @@ const TwittCreater = () => {
       );
     } else {
       mutate({ payload: CreateTwittData });
-      // const form = new FormData();
     }
   };
 
   return (
     <div className="flex min-h-40 w-full gap-3 p-4 text-white">
-      <ProfileComponents href={"/profile"} image={user?.image} />{" "}
-      {/* todo: yaha pe mujhe profile ka link dalna hai  */}
+      <ProfileComponents href={`/profile/${user?.id}`} image={user?.image} />{" "}
       <form
         onSubmit={hanleSumbit}
         className="flex w-full flex-col gap-1 md:gap-4"
