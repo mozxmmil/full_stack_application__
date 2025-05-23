@@ -1,18 +1,19 @@
 import { graphqlClient } from "@/client/query";
+import { TwittPayload } from "@/gql/graphql";
+import { createTwitt } from "@/graphql/client/mutation/createTwitt";
 import { getAllTwitts } from "@/graphql/client/query/getAllTwitt";
 import { getCurrentUser } from "@/graphql/client/query/getUser";
+import { uploadImageURI } from "@/graphql/client/query/uploadImageCreateTwitt";
 import { useCurrentUser } from "@/zustand/currentUser";
-import { useTwitterAccount } from "@/zustand/twitterAccount";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { exportPKCS8 } from "jose";
 
 export const useGetCurrentUser = () => {
-  const isFollowing = useTwitterAccount((state) => state.isFollowing);
   const setUser = useCurrentUser((state) => state.setUser);
 
   const query = useQuery({
     queryKey: ["currentUser"],
     queryFn: () => graphqlClient.request(getCurrentUser),
-    enabled: !isFollowing,
   });
 
   if (
@@ -35,8 +36,33 @@ export const useGetCurrentUser = () => {
 
 export const useGetAllTwitts = () => {
   const query = useQuery({
-    queryKey: ["all-user"],
+    queryKey: ["all-Twitt"],
     queryFn: () => graphqlClient.request(getAllTwitts),
   });
   return { ...query, data: query.data?.getTwitts };
+};
+
+export const useCrateTwitt = () => {
+  const client = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: ({ payload }: { payload: TwittPayload }) =>
+      graphqlClient.request(createTwitt, { payload }),
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ["all-Twitt"] });
+    },
+  });
+
+  return mutation;
+};
+
+export const useGetuploadImageURI = () => {
+  return async (iamgeType: string, imageName: string, ) => {
+    const { uploadImage } = await graphqlClient.request(uploadImageURI, {
+      iamgeType,
+      imageName,
+    });
+    if (uploadImage) {
+      return uploadImage;
+    }
+  };
 };

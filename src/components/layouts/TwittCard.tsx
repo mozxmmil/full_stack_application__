@@ -9,6 +9,7 @@ import {
 import Image from "next/image";
 import { TwittType } from "../../../types/getAllTwittType";
 import ProfileComponents from "../ui/profileComponet";
+import { timeCalculator } from "@/utils/timeCalculator";
 
 const TwittCard = ({
   id,
@@ -18,6 +19,7 @@ const TwittCard = ({
   updatedAt,
   image,
 }: TwittType) => {
+  const time = timeCalculator(createdAt as string);
   return (
     <div className="flex min-h-40 w-full gap-3 divide-y p-4 text-white">
       <ProfileComponents
@@ -25,49 +27,52 @@ const TwittCard = ({
         image={userId?.image}
       />
 
-      <div className="flex flex-col justify-between gap-3 ">
+      <div className="flex w-full flex-col justify-between gap-3">
         <div>
           <div className="top flex gap-2">
             <span>{userId?.name}</span>
             <span className="text-neutral-500">{userId?.name} .</span>
-            <span className="text-neutral-500">
-              {createdAt ? new Date(createdAt).toLocaleString() : ""}
-            </span>
+            <span className="text-neutral-500">{createdAt ? time : ""}</span>
           </div>
-          <div className=" whitespace-break-spaces mt-3">
-            <h1>{twitt}</h1>
+          <div className="mt-3 w-[90%] whitespace-break-spaces">
+            <h1 className="text-wrap">{twitt}</h1>
           </div>
         </div>
         {image && (
-          <div className="bottom relative max-h-100 min-h-40 overflow-hidden rounded-md border border-neutral-400 bg-red-300">
+          <div className="relative mx-auto aspect-square w-full max-w-md overflow-hidden rounded-2xl border bg-gray-100">
             <Image
               src={image}
-              width={500}
-              height={500}
-              alt="not found"
-              className="h-full w-full object-cover"
+              alt="Uploaded media"
+              fill
+              priority={false} // agar important ho toh true karo
+              loading="lazy"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+              onError={(e) => {
+                e.currentTarget.src = "/fallback.png"; // fallback image
+              }}
             />
           </div>
         )}
-        <div className="lastbottom flex items-center justify-between  align-bottom text-sm">
-          <div className="iconsContainer flex items-center gap-2 hover:cursor-pointer hover:text-blue-500">
+        <div className="lastbottom flex items-center justify-between align-bottom text-sm">
+          <div className="iconsContainer flex items-center gap-1 hover:cursor-pointer hover:text-blue-500">
             <IconMessageCircle className="size-5" />
-            <span>12</span>
+            <span className="md text-sm">12</span>
           </div>
-          <div className="iconsContainer flex items-center gap-2 hover:cursor-pointer hover:text-green-500">
+          <div className="iconsContainer flex items-center gap-1 hover:cursor-pointer hover:text-green-500">
             <IconRepeat className="size-5" />
             <span>21</span>
           </div>
-          <div className="iconsContainer flex items-center gap-2 hover:cursor-pointer hover:text-pink-500">
+          <div className="iconsContainer flex items-center gap-1 hover:cursor-pointer hover:text-pink-500">
             <IconHeart className="size-5" />
             <span>22</span>
           </div>
-          <div className="iconsContainer flex items-center gap-2 hover:cursor-pointer hover:text-blue-500">
+          <div className="iconsContainer flex items-center gap-1 hover:cursor-pointer hover:text-blue-500">
             <IconChartHistogram className="size-5" />
             <span>22</span>
           </div>
 
-          <div className="iconsContainer flex items-center gap-2">
+          <div className="iconsContainer flex items-center gap-1">
             <IconBookmark className="size-5 hover:cursor-pointer hover:text-blue-500" />
             <IconUpload className="size-5 hover:cursor-pointer hover:text-blue-500" />
           </div>

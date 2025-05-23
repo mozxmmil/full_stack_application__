@@ -4,6 +4,7 @@ export const getAllTwitts = graphql(`
   #graphql
   query getAllTwitts {
     getTwitts {
+      image
       twitt
       id
       updatedAt

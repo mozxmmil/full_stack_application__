@@ -1,48 +1,78 @@
 "use client";
+import { useCrateTwitt, useGetuploadImageURI } from "@/hook/useTwitt";
 import { signupAxiso } from "@/utils/apicall";
-import { IconGif, IconMoodEmpty } from "@tabler/icons-react";
-import { useMutation } from "@tanstack/react-query";
+import { useCurrentUser } from "@/zustand/currentUser";
+import { IconGif, IconLoader2, IconMoodEmpty } from "@tabler/icons-react";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
-import React, { use, useRef, useState } from "react";
+import Image from "next/image";
+import React, { useRef, useState } from "react";
 import { createTwitterErrorType } from "../../../types/error";
 import {
   crateTwittDataSchema,
-  CreateTwittDataType,
+  crateTwittDataSchemaType,
+  imageValidation,
 } from "../../../types/zod/createTwittSchema";
 import ClickoutsideCloser from "../common/clickOutsideCloser";
 import Buttion from "../ui/Buttion";
 import ImageInput from "../ui/imageInput";
 import ProfileComponents from "../ui/profileComponet";
-import { useCurrentUser } from "@/zustand/currentUser";
 
 const TwittCreater = () => {
+  const { mutate, data, isPending, error: errors } = useCrateTwitt();
+  console.log(data);
+  console.log(errors);
+  const uploadFn = useGetuploadImageURI();
   const user = useCurrentUser((state) => state.user);
   const rf = useRef<HTMLInputElement | null>(null);
-  const [CreateTwittData, setCreateTwittData] = useState<CreateTwittDataType>({
-    data: "",
-    image: undefined as unknown as File,
-  });
+  const [CreateTwittData, setCreateTwittData] =
+    useState<crateTwittDataSchemaType>({
+      data: "",
+      image: "",
+    });
+  console.log(CreateTwittData);
   const [error, seterror] = useState<createTwitterErrorType>({
     data: "",
     image: "",
   });
   const [emoji, setEmoji] = useState<boolean>(false);
+  const [isImageShowing, setIsImageShowing] = useState<string | null>(null);
 
   const handleInputClicked = () => {
     rf.current?.click();
   };
 
-  const handleChange = (
+  const handleChange = async (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    e.preventDefault();
-    e.stopPropagation();
     const data = e.target;
+    console.log(data.name);
     if (data.name === "image" && data instanceof HTMLInputElement) {
       const files = data.files;
       if (files && files.length > 0) {
         const file = files[0];
-        setCreateTwittData((prev) => ({ ...prev, image: file }));
+
+        const { success, error } = imageValidation.safeParse(file);
+        if (!success) {
+          error.errors.map((message) =>
+            seterror((prev) => ({
+              ...prev,
+              [message.path[0]]: message.message,
+            })),
+          );
+          return;
+        }
+        const SignUrl = await uploadFn(file.type, file.name);
+        if (SignUrl) {
+          await signupAxiso.put(SignUrl, file, {
+            headers: {
+              "Content-Type": file.type,
+            },
+          });
+          const url = new URL(SignUrl);
+          const ImageUrl = `${url.origin}${url.pathname}`;
+          setIsImageShowing(ImageUrl);
+          setCreateTwittData((prev) => ({ ...prev, image: ImageUrl }));
+        }
       }
       return;
     }
@@ -62,16 +92,6 @@ const TwittCreater = () => {
     }
   };
 
-  const mutation = useMutation({
-    mutationFn: (data: FormData) => {
-      return signupAxiso.post("api/crateTwitt", data, {
-        headers: {
-          ["Content-Type"]: "multipart/form-data",
-        },
-      });
-    },
-  });
-
   //   console.log(mutation);
   const hanleSumbit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -82,16 +102,11 @@ const TwittCreater = () => {
         seterror((prev) => ({ ...prev, [message.path[0]]: message.message })),
       );
     } else {
-      const form = new FormData();
-      form.append("data", CreateTwittData.data);
-      if (CreateTwittData.image) {
-        form.append("image", CreateTwittData.image);
-      }
-
-      mutation.mutate(form);
+      mutate({ payload: CreateTwittData });
       // const form = new FormData();
     }
   };
+
   return (
     <div className="flex min-h-40 w-full gap-3 p-4 text-white">
       <ProfileComponents href={"/profile"} image={user?.image} />{" "}
@@ -110,6 +125,22 @@ const TwittCreater = () => {
           />
           <span className="text-sm text-red-500">{error?.data}</span>
         </div>
+        {isImageShowing && (
+          <div className="relative mx-auto aspect-square w-full max-w-md overflow-hidden rounded-2xl border bg-gray-100">
+            <Image
+              src={isImageShowing}
+              alt="Uploaded media"
+              fill
+              priority={false} // agar important ho toh true karo
+              loading="lazy"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+              onError={(e) => {
+                e.currentTarget.src = "/fallback.png"; // fallback image
+              }}
+            />
+          </div>
+        )}
 
         <div className="flex items-center justify-between">
           <div className="lastbottom flex items-center justify-between gap-1 text-sm">
@@ -149,7 +180,8 @@ const TwittCreater = () => {
             <Buttion
               type="submit"
               title="Post"
-              className="text-md px-4 py-2 outline-none"
+              icon={isPending && <IconLoader2 className="animate-spin" />}
+              className="text-md flex-row-reverse px-4 py-2 outline-none"
             />
           </div>
         </div>

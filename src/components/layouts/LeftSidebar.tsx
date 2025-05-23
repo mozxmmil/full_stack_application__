@@ -1,14 +1,14 @@
 import { SideBarItem } from "@/utils/item_leftSideBar";
 import { IconBrandX } from "@tabler/icons-react";
 import Link from "next/link";
-import React from "react";
 import Buttion from "../ui/Buttion";
+import WrapperProfile from "../wrapperComponent/wrapperProfile";
 
 const SidebarLeft = () => {
   return (
-    <nav className="hidden md:block md:col-span-3 ">
-      <section className="flex justify-end bg-orange-600 sm:col-span-2 md:col-span-3">
-        <div className="bg-green-400 p-1 md:w-[85%] md:py-4">
+    <nav className="hidden md:col-span-3 md:block">
+      <section className="flex justify-end sm:col-span-2 md:col-span-3">
+        <div className="p-1 md:w-[85%] md:py-4">
           <div className="flex size-15 items-center justify-center rounded-full transition-colors duration-300 hover:cursor-pointer hover:bg-neutral-500">
             <IconBrandX className="size-5 text-[#E7E9EA] md:size-10" />
           </div>
@@ -26,8 +26,9 @@ const SidebarLeft = () => {
               </Link>
             ))}
           </div>
-          <div className="w-full pr-5">
+          <div className="w-full pr-5 ">
             <Buttion title="Post" />
+            <WrapperProfile />
           </div>
         </div>
       </section>

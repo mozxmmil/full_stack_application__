@@ -2,6 +2,12 @@
 export const schema = `#graphql
 
 scalar DateTime
+scalar Upload
+
+input TwittPayload {
+    data:String!
+    image:String
+}
 
 type Twitt {
     id:String
@@ -25,12 +31,11 @@ type User {
   type Query {
     getUser:User
     getTwitts:[Twitt]
+    uploadImage(iamgeType:String!,imageName:String!):String
   }
 
-input TwittPayload {
-    data:String!
-    image:String
-}
+
+
 
 
   type Mutation {

@@ -15,6 +15,7 @@ export type Scalars = {
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
   DateTime: { input: any; output: any; }
+  Upload: { input: any; output: any; }
 };
 
 export type Mutation = {
@@ -31,6 +32,13 @@ export type Query = {
   __typename?: 'Query';
   getTwitts?: Maybe<Array<Maybe<Twitt>>>;
   getUser?: Maybe<User>;
+  uploadImage?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type QueryUploadImageArgs = {
+  iamgeType: Scalars['String']['input'];
+  imageName: Scalars['String']['input'];
 };
 
 export type Twitt = {
@@ -57,16 +65,33 @@ export type User = {
   twitt?: Maybe<Array<Maybe<Twitt>>>;
 };
 
+export type CreateTwittMutationVariables = Exact<{
+  payload?: InputMaybe<TwittPayload>;
+}>;
+
+
+export type CreateTwittMutation = { __typename?: 'Mutation', createTwitt?: { __typename?: 'Twitt', twitt: string, createdAt?: any | null, id?: string | null, image?: string | null, userId?: { __typename?: 'User', name?: string | null, image?: string | null, id?: string | null } | null } | null };
+
 export type GetAllTwittsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllTwittsQuery = { __typename?: 'Query', getTwitts?: Array<{ __typename?: 'Twitt', twitt: string, id?: string | null, updatedAt?: any | null, createdAt?: any | null, userId?: { __typename?: 'User', name?: string | null, image?: string | null, id?: string | null } | null } | null> | null };
+export type GetAllTwittsQuery = { __typename?: 'Query', getTwitts?: Array<{ __typename?: 'Twitt', image?: string | null, twitt: string, id?: string | null, updatedAt?: any | null, createdAt?: any | null, userId?: { __typename?: 'User', name?: string | null, image?: string | null, id?: string | null } | null } | null> | null };
 
 export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'User', image?: string | null, name?: string | null, id?: string | null, email?: string | null } | null };
 
+export type UploadImageQueryVariables = Exact<{
+  iamgeType: Scalars['String']['input'];
+  imageName: Scalars['String']['input'];
+}>;
 
-export const GetAllTwittsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getAllTwitts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getTwitts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"twitt"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"userId"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllTwittsQuery, GetAllTwittsQueryVariables>;
+
+export type UploadImageQuery = { __typename?: 'Query', uploadImage?: string | null };
+
+
+export const CreateTwittDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateTwitt"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payload"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"TwittPayload"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createTwitt"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"payload"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payload"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userId"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"twitt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]}}]} as unknown as DocumentNode<CreateTwittMutation, CreateTwittMutationVariables>;
+export const GetAllTwittsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getAllTwitts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getTwitts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"twitt"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"userId"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllTwittsQuery, GetAllTwittsQueryVariables>;
 export const GetUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<GetUserQuery, GetUserQueryVariables>;
+export const UploadImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UploadImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"iamgeType"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"imageName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uploadImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"iamgeType"},"value":{"kind":"Variable","name":{"kind":"Name","value":"iamgeType"}}},{"kind":"Argument","name":{"kind":"Name","value":"imageName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"imageName"}}}]}]}}]} as unknown as DocumentNode<UploadImageQuery, UploadImageQueryVariables>;
