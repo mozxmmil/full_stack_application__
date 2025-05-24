@@ -6,7 +6,7 @@ import { getCurrentUser } from "@/graphql/client/query/getUser";
 import { uploadImageURI } from "@/graphql/client/query/uploadImageCreateTwitt";
 import { useCurrentUser } from "@/zustand/currentUser";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { exportPKCS8 } from "jose";
+import { toast } from "sonner";
 
 export const useGetCurrentUser = () => {
   const setUser = useCurrentUser((state) => state.setUser);
@@ -47,8 +47,9 @@ export const useCrateTwitt = () => {
   const mutation = useMutation({
     mutationFn: ({ payload }: { payload: TwittPayload }) =>
       graphqlClient.request(createTwitt, { payload }),
-    onSuccess: () => {
-      client.invalidateQueries({ queryKey: ["all-Twitt"] });
+    onSuccess: async () => {
+      toast.success("Twitt Created successfully");
+      await client.invalidateQueries({ queryKey: ["all-Twitt"] });
     },
   });
 
@@ -56,7 +57,7 @@ export const useCrateTwitt = () => {
 };
 
 export const useGetuploadImageURI = () => {
-  return async (iamgeType: string, imageName: string, ) => {
+  return async (iamgeType: string, imageName: string) => {
     const { uploadImage } = await graphqlClient.request(uploadImageURI, {
       iamgeType,
       imageName,

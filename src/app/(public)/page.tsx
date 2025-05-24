@@ -2,6 +2,7 @@
 import Header from "@/components/layouts/headerButton";
 import TwittCreater from "@/components/layouts/TwittCreater";
 import WrpperTwittCard from "@/components/layouts/wrapperTwittCard";
+import WrapperFolllowing from "@/components/wrapperComponent/wapperFollowing";
 
 const MainPage = () => {
   return (
@@ -9,6 +10,7 @@ const MainPage = () => {
       <Header />
       <TwittCreater />
       <WrpperTwittCard />
+      <WrapperFolllowing />
     </section>
   );
 };

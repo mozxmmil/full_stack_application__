@@ -25,8 +25,10 @@ type User {
     email:String        
     image:String    
     twitt:[Twitt]
-    
+    follower:[User]
+    following:[User]
   }
+
 
   type Query {
     getUser:User
@@ -35,11 +37,11 @@ type User {
   }
 
 
-
-
-
   type Mutation {
     createTwitt(payload:TwittPayload):Twitt
+    followUser(userId:String!):Boolean
+    unFollowUser(userId:String!):Boolean
+
   }
   
 `;

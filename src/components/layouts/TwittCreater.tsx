@@ -18,9 +18,8 @@ import ImageInput from "../ui/imageInput";
 import ProfileComponents from "../ui/profileComponet";
 
 const TwittCreater = () => {
-  const { mutate, data, isPending, error: errors } = useCrateTwitt();
-  console.log(data);
-  console.log(errors);
+  const { mutate, isPending } = useCrateTwitt();
+
   const uploadFn = useGetuploadImageURI();
   const user = useCurrentUser((state) => state.user);
   const rf = useRef<HTMLInputElement | null>(null);
@@ -102,6 +101,11 @@ const TwittCreater = () => {
       );
     } else {
       mutate({ payload: CreateTwittData });
+      setIsImageShowing(null);
+      setCreateTwittData({
+        data: "",
+        image: "",
+      });
     }
   };
 

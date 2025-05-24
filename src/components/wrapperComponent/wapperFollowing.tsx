@@ -3,18 +3,19 @@ import { useGetAllTwitts } from "@/hook/useTwitt";
 import { IconLoader3 } from "@tabler/icons-react";
 import { TwittType } from "../../../types/getAllTwittType";
 import Buttion from "../ui/Buttion";
-import TwittCard from "./TwittCard";
+import TwittCard from "../layouts/TwittCard";
 import { useTwitterAccount } from "@/zustand/twitterAccount";
 
-const WrpperTwittCard = () => {
+const WrapperFolllowing = () => {
   const isFollowing = useTwitterAccount((state) => state.isFollowing);
   const { data, isLoading, error, refetch } = useGetAllTwitts();
   const twitt = data as TwittType[];
-//   console.log(isFollowing);
+//   console.log(isFollowing)
+
   // get twitt
   return (
     <>
-      {!isFollowing && (
+      {isFollowing && (
         <>
           {isLoading ? (
             <IconLoader3 className="mx-auto mt-10 size-6 animate-spin text-white" />
@@ -37,4 +38,4 @@ const WrpperTwittCard = () => {
   );
 };
 
-export default WrpperTwittCard;
+export default WrapperFolllowing;

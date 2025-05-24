@@ -21,11 +21,17 @@ export type Scalars = {
 export type Mutation = {
   __typename?: 'Mutation';
   createTwitt?: Maybe<Twitt>;
+  followUser?: Maybe<Scalars['Boolean']['output']>;
 };
 
 
 export type MutationCreateTwittArgs = {
   payload?: InputMaybe<TwittPayload>;
+};
+
+
+export type MutationFollowUserArgs = {
+  userId: Scalars['String']['input'];
 };
 
 export type Query = {
@@ -59,6 +65,8 @@ export type TwittPayload = {
 export type User = {
   __typename?: 'User';
   email?: Maybe<Scalars['String']['output']>;
+  follower?: Maybe<Array<Maybe<User>>>;
+  following?: Maybe<Array<Maybe<User>>>;
   id?: Maybe<Scalars['String']['output']>;
   image?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
