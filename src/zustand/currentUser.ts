@@ -1,10 +1,14 @@
 import { create } from "zustand";
 
-interface userDataType {
+type personData = { id: string; name: string };
+
+export interface userDataType {
   id: string;
   name: string;
   email: string;
   image: string;
+  follower: personData[];
+  following: personData[];
 }
 
 interface currentUserType {

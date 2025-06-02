@@ -11,7 +11,7 @@ export const imageValidation = z
   .union([
     z.instanceof(File).refine(
       (file) => {
-        return ["image/jpeg", "image/png"].includes(file.type);
+        return ["image/jpeg", "image/png","image/avif"].includes(file.type);
       },
       {
         message: "only JPEG and PNG allowed",

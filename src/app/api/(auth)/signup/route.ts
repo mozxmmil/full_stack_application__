@@ -25,16 +25,18 @@ export async function POST(req: NextRequest) {
       image: resimage,
     };
 
-    // zod type checking
+
 
     const zodParseData = userSchemaforApi.safeParse(data);
-
-    if (!zodParseData.success)
-      throw new ApiError(
-        400,
-        "invalid data",
-        JSON.stringify(zodParseData.error.format()),
+    if (!zodParseData.success) {
+      const errorMessage = zodParseData.error?.issues.map(
+        (error) => error.message,
       );
+
+      const filterErrorMessage = errorMessage[0];
+
+      throw new ApiResponse(400, filterErrorMessage, false, errorMessage);
+    }
 
     // destructuring the data
     const { name, email, password, image } = zodParseData.data;

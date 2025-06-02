@@ -13,6 +13,6 @@ const MainPage = () => {
       <WrapperFolllowing />
     </section>
   );
-};
+}
 
 export default MainPage;

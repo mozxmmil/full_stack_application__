@@ -1,43 +1,45 @@
+import { useFollow, useUnfollow } from "@/hook/follow_unfollow";
+import { timeCalculator } from "@/utils/timeCalculator";
+import { useCurrentUser } from "@/zustand/currentUser";
 import {
   IconBookmark,
   IconChartHistogram,
   IconHeart,
+  IconLoader2,
   IconMessageCircle,
   IconRepeat,
   IconUpload,
 } from "@tabler/icons-react";
 import Image from "next/image";
 import { TwittType } from "../../../types/getAllTwittType";
+import Buttion from "../ui/Buttion";
 import ProfileComponents from "../ui/profileComponet";
-import { timeCalculator } from "@/utils/timeCalculator";
+import { useEffect } from "react";
+import FollowButton from "../ui/followButton";
 
-const TwittCard = ({
-  id,
-  twitt,
-  userId,
-  createdAt,
-  updatedAt,
-  image,
-}: TwittType) => {
+const TwittCard = ({ id, twitt, userId, createdAt, image }: TwittType) => {
+  const user = useCurrentUser((state) => state.user);
   const time = timeCalculator(createdAt as string);
+
+  useEffect(() => {}, [user?.following]);
+
   return (
     <div className="flex min-h-40 w-full gap-3 divide-y p-4 text-white">
-      <ProfileComponents
-        href={`/profile/${userId?.id}`}
-        image={userId?.image}
-      />
+      <ProfileComponents href={`/profile/${id}`} image={userId?.image} />
 
       <div className="flex w-full flex-col justify-between gap-3">
-        <div>
-          <div className="top flex gap-2">
+        <div className="top items-sta flex justify-between gap-2">
+          <div className="flex gap-2">
             <span>{userId?.name}</span>
             <span className="text-neutral-500">{userId?.name} .</span>
             <span className="text-neutral-500">{createdAt ? time : ""}</span>
           </div>
-          <div className="mt-3 w-[90%] whitespace-break-spaces">
-            <h1 className="text-wrap">{twitt}</h1>
-          </div>
+          {user && <FollowButton userId={userId} user={user} />}
         </div>
+        <div className="mt-3 w-[90%] whitespace-break-spaces">
+          <h1 className="text-wrap">{twitt}</h1>
+        </div>
+
         {image && (
           <div className="relative mx-auto aspect-square w-full max-w-md overflow-hidden rounded-2xl border bg-gray-100">
             <Image

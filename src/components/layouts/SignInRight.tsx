@@ -62,6 +62,7 @@ const SigninRightCard = () => {
       ...data,
       redirect: false,
     });
+    console.log(res)
     if (res?.ok) {
       setLoading(false);
       toast.success("signIn susscess");
@@ -74,7 +75,7 @@ const SigninRightCard = () => {
       return;
     }
   };
-  useEffect(() => {}, []);
+  
 
   return (
     <div className="flex max-h-full w-full flex-col items-center justify-center gap-2 text-white md:items-start md:justify-start md:gap-4">

@@ -1,4 +1,4 @@
-import { cn } from "@/utils/cn";
+ import { cn } from "@/utils/cn";
 import Image from "next/image";
 import Link, { LinkProps } from "next/link";
 import { HTMLAttributes } from "react";
@@ -21,8 +21,8 @@ const ProfileComponents = ({ image, className, ...props }: Props) => {
           src={image && image}
           alt="profile"
           className="h-full w-full object-cover"
-          width={10}
-          height={10}
+          width={100}
+          height={100}
         
         />
       )}

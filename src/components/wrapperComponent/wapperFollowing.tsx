@@ -10,9 +10,8 @@ const WrapperFolllowing = () => {
   const isFollowing = useTwitterAccount((state) => state.isFollowing);
   const { data, isLoading, error, refetch } = useGetAllTwitts();
   const twitt = data as TwittType[];
-//   console.log(isFollowing)
 
-  // get twitt
+ 
   return (
     <>
       {isFollowing && (
@@ -22,7 +21,13 @@ const WrapperFolllowing = () => {
           ) : (
             <>
               {twitt &&
-                twitt.map((item) => <TwittCard {...item} key={item?.id} />)}
+                twitt.map((item) => (
+                  <TwittCard
+                    {...item}
+                    key={item?.id}
+                    
+                  />
+                ))}
             </>
           )}
           {error && (

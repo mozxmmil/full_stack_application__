@@ -16,18 +16,31 @@ export const useGetCurrentUser = () => {
     queryFn: () => graphqlClient.request(getCurrentUser),
   });
 
+
   if (
     query.data?.getUser &&
     query.data.getUser.id &&
     query.data.getUser.name &&
     query.data.getUser.email &&
-    query.data.getUser.image
+    query.data.getUser.image &&
+    query.data.getUser.follower &&
+    query.data.getUser.following
   ) {
     setUser({
       id: query.data.getUser.id,
       name: query.data.getUser.name,
       email: query.data.getUser.email,
       image: query.data.getUser.image,
+      follower:
+        query.data.getUser.follower?.filter(
+          (f): f is { id: string; name: string } =>
+            f !== null && f.id !== null && f.name !== null,
+        ) ?? [],
+      following:
+        query.data.getUser.following?.filter(
+          (f): f is { id: string; name: string } =>
+            f !== null && f.id !== null && f.name !== null,
+        ) ?? [],
     });
   }
 

@@ -138,7 +138,6 @@ const MultiStepForm = ({ callback }: Props) => {
       }
     } catch (e) {
       const error = e as AxiosErrorWithMessage;
-      
       if (error.response?.data?.data?.message) {
         toast.error(error.response?.data?.data.message);
       } else if (error.message) {

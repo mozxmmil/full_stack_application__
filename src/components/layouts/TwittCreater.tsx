@@ -22,6 +22,7 @@ const TwittCreater = () => {
 
   const uploadFn = useGetuploadImageURI();
   const user = useCurrentUser((state) => state.user);
+  
   const rf = useRef<HTMLInputElement | null>(null);
   const [CreateTwittData, setCreateTwittData] =
     useState<crateTwittDataSchemaType>({
@@ -149,7 +150,7 @@ const TwittCreater = () => {
             <input
               ref={rf}
               type="file"
-              accept="image/png , image/jpeg"
+              accept="image/png , image/jpeg ,image/avif"
               className="hidden"
               name="image"
               onChange={handleChange}
@@ -182,7 +183,7 @@ const TwittCreater = () => {
               type="submit"
               title="Post"
               icon={isPending && <IconLoader2 className="animate-spin" />}
-              className="text-md flex-row-reverse px-4 py-2 outline-none"
+              className="text-md flex-row-reverse bg-blue-600 px-4 py-2 outline-none hover:bg-blue-500"
             />
           </div>
         </div>

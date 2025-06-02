@@ -15,14 +15,18 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
     "\n  #graphql\n\n  mutation CreateTwitt($payload: TwittPayload) {\n    createTwitt(payload: $payload) {\n      userId {\n        name\n        image\n        id\n      }\n      twitt\n      createdAt\n      id\n      image\n    }\n  }\n": typeof types.CreateTwittDocument,
+    "\n  #graphql\n\n  mutation FollowUser($userId: String!) {\n    followUser(userId: $userId)\n  }\n": typeof types.FollowUserDocument,
+    "\n  #graphql\n  mutation UnFollowUser($userId: String!) {\n    unFollowUser(userId: $userId)\n  }\n": typeof types.UnFollowUserDocument,
     "\n  #graphql\n  query getAllTwitts {\n    getTwitts {\n      image\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n": typeof types.GetAllTwittsDocument,
-    "\n  #graphql\n\n  query GetUser {\n    getUser {\n      image\n      name\n      id\n      email\n    }\n  }\n": typeof types.GetUserDocument,
+    "\n  #graphql\n\n  query GetUser {\n    getUser {\n      image\n      name\n      id\n      email\n\n      follower {\n        name\n        id\n      }\n\n      following {\n        name\n        id\n      }\n    }\n  }\n": typeof types.GetUserDocument,
     "\n  #graphql\n\n  query UploadImage($iamgeType: String!, $imageName: String!) {\n    uploadImage(iamgeType: $iamgeType, imageName: $imageName)\n  }\n": typeof types.UploadImageDocument,
 };
 const documents: Documents = {
     "\n  #graphql\n\n  mutation CreateTwitt($payload: TwittPayload) {\n    createTwitt(payload: $payload) {\n      userId {\n        name\n        image\n        id\n      }\n      twitt\n      createdAt\n      id\n      image\n    }\n  }\n": types.CreateTwittDocument,
+    "\n  #graphql\n\n  mutation FollowUser($userId: String!) {\n    followUser(userId: $userId)\n  }\n": types.FollowUserDocument,
+    "\n  #graphql\n  mutation UnFollowUser($userId: String!) {\n    unFollowUser(userId: $userId)\n  }\n": types.UnFollowUserDocument,
     "\n  #graphql\n  query getAllTwitts {\n    getTwitts {\n      image\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n": types.GetAllTwittsDocument,
-    "\n  #graphql\n\n  query GetUser {\n    getUser {\n      image\n      name\n      id\n      email\n    }\n  }\n": types.GetUserDocument,
+    "\n  #graphql\n\n  query GetUser {\n    getUser {\n      image\n      name\n      id\n      email\n\n      follower {\n        name\n        id\n      }\n\n      following {\n        name\n        id\n      }\n    }\n  }\n": types.GetUserDocument,
     "\n  #graphql\n\n  query UploadImage($iamgeType: String!, $imageName: String!) {\n    uploadImage(iamgeType: $iamgeType, imageName: $imageName)\n  }\n": types.UploadImageDocument,
 };
 
@@ -47,11 +51,19 @@ export function graphql(source: "\n  #graphql\n\n  mutation CreateTwitt($payload
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "\n  #graphql\n\n  mutation FollowUser($userId: String!) {\n    followUser(userId: $userId)\n  }\n"): (typeof documents)["\n  #graphql\n\n  mutation FollowUser($userId: String!) {\n    followUser(userId: $userId)\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  #graphql\n  mutation UnFollowUser($userId: String!) {\n    unFollowUser(userId: $userId)\n  }\n"): (typeof documents)["\n  #graphql\n  mutation UnFollowUser($userId: String!) {\n    unFollowUser(userId: $userId)\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "\n  #graphql\n  query getAllTwitts {\n    getTwitts {\n      image\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  #graphql\n  query getAllTwitts {\n    getTwitts {\n      image\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  #graphql\n\n  query GetUser {\n    getUser {\n      image\n      name\n      id\n      email\n    }\n  }\n"): (typeof documents)["\n  #graphql\n\n  query GetUser {\n    getUser {\n      image\n      name\n      id\n      email\n    }\n  }\n"];
+export function graphql(source: "\n  #graphql\n\n  query GetUser {\n    getUser {\n      image\n      name\n      id\n      email\n\n      follower {\n        name\n        id\n      }\n\n      following {\n        name\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  #graphql\n\n  query GetUser {\n    getUser {\n      image\n      name\n      id\n      email\n\n      follower {\n        name\n        id\n      }\n\n      following {\n        name\n        id\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

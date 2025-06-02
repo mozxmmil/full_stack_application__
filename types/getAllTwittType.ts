@@ -9,4 +9,6 @@ export type TwittType = {
     image?: string;
     name?: string;
   };
+  handleFollow: () => void;
+  handleUnfollow: () => void;
 };

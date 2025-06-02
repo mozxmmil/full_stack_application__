@@ -8,6 +8,7 @@ import { useTwitterAccount } from "@/zustand/twitterAccount";
 
 const WrpperTwittCard = () => {
   const isFollowing = useTwitterAccount((state) => state.isFollowing);
+  
   const { data, isLoading, error, refetch } = useGetAllTwitts();
   const twitt = data as TwittType[];
 //   console.log(isFollowing);

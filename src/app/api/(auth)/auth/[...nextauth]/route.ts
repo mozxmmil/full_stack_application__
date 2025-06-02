@@ -38,8 +38,8 @@ export const authOptions: NextAuthOptions = {
           }
 
           const passwordMatch = await bcrypt.compare(
-            credentials.password ,
-            user.password! ,
+            credentials.password,
+            user.password!,
           );
 
           if (!passwordMatch) {
@@ -51,9 +51,8 @@ export const authOptions: NextAuthOptions = {
             email: user.email,
             name: user.name ?? undefined,
           };
-        } catch (error) {
-          
-          throw new ApiResponse(500, "something Wrong", false, error);
+        } catch (error: any) {
+          throw new ApiResponse(500, error.message as string, false, error);
         }
       },
     }),

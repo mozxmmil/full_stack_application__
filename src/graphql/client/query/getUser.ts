@@ -9,7 +9,16 @@ export const getCurrentUser = graphql(`
       name
       id
       email
+
+      follower {
+        name
+        id
+      }
+
+      following {
+        name
+        id
+      }
     }
   }
 `);
-
