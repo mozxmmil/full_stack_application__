@@ -11,6 +11,10 @@ export const useFollow = () => {
       await queryClient.invalidateQueries({ queryKey: ["currentUser"] });
       toast.success("Followed");
     },
+    onError: (error) => {
+      console.log(error);
+      toast.error(error.message);
+    },
   });
 
   return mutation;
@@ -24,6 +28,10 @@ export const useUnfollow = () => {
       await queryClient.invalidateQueries({ queryKey: ["currentUser"] });
       toast.success("unFollow");
     },
+    onError: (error) => {
+        console.log(error);
+        toast.error(error.message);
+      },
   });
 
   return mutation;

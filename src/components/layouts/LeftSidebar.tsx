@@ -1,8 +1,8 @@
-import { SideBarItem } from "@/utils/item_leftSideBar";
+
 import { IconBrandX } from "@tabler/icons-react";
-import Link from "next/link";
 import Buttion from "../ui/Buttion";
 import WrapperProfile from "../wrapperComponent/wrapperProfile";
+import LeftSideBarIconList from "./leftSideBarIconList";
 
 const SidebarLeft = () => {
   return (
@@ -13,20 +13,9 @@ const SidebarLeft = () => {
             <IconBrandX className="size-5 text-[#E7E9EA] md:size-10" />
           </div>
           <div className="mt-3 flex flex-col gap-3">
-            {SideBarItem.map((item, inx) => (
-              <Link
-                href={item.link}
-                key={inx}
-                className="flex w-fit items-center gap-3 rounded-full px-2 py-3 pr-8 text-white hover:bg-[rgba(95,85,85,0.4)]"
-              >
-                {item.icon}
-                <span className="text-md hidden md:block md:font-[10px] 2xl:text-2xl">
-                  {item.title}
-                </span>
-              </Link>
-            ))}
+            <LeftSideBarIconList />
           </div>
-          <div className="w-full pr-5 ">
+          <div className="w-full pr-5">
             <Buttion title="Post" />
             <WrapperProfile />
           </div>

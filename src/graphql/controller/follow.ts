@@ -11,10 +11,14 @@ export const folloUserHandler = async (
   if (userId === cnx.user.userId) throw new Error("you can't follow");
   if (!userId) throw new Error("please Provide User Id");
 
-  //todo: i have to fix some bug ...............
-  const checking = await prismaClient.follow.findFirst({
+  const checking = await prismaClient.user.findFirst({
     where: {
-      followingId: userId,
+      id: cnx.user.userId,
+      following: {
+        some: {
+          followingId: userId as string,
+        },
+      },
     },
   });
 
