@@ -27,13 +27,23 @@ type User {
     twitt:[Twitt]
     follower:[User]
     following:[User]
+    createdAt:DateTime
+    updatedAt:DateTime
   }
 
+type ProfileDataMedia {
+    id:String
+    image:String
+    video:String
+}
 
   type Query {
     getUser:User
     getTwitts:[Twitt]
     uploadImage(iamgeType:String!,imageName:String!):String
+    getProfileData(id:String!):User
+    getProfileDataTwitt(id:String!):[Twitt]
+    getProfileDataMedia(id:String!):[ProfileDataMedia]
   }
 
 

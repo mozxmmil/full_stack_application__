@@ -1,10 +1,14 @@
 
+'use client'
 import { IconBrandX } from "@tabler/icons-react";
 import Buttion from "../ui/Buttion";
 import WrapperProfile from "../wrapperComponent/wrapperProfile";
 import LeftSideBarIconList from "./leftSideBarIconList";
+import { useGetCurrentUser } from "@/hook/useTwitt";
 
 const SidebarLeft = () => {
+   useGetCurrentUser();
+
   return (
     <nav className="hidden md:col-span-3 md:block">
       <section className="flex justify-end sm:col-span-2 md:col-span-3">

@@ -1,21 +1,18 @@
-import { useFollow, useUnfollow } from "@/hook/follow_unfollow";
 import { timeCalculator } from "@/utils/timeCalculator";
 import { useCurrentUser } from "@/zustand/currentUser";
 import {
-  IconBookmark,
-  IconChartHistogram,
-  IconHeart,
-  IconLoader2,
-  IconMessageCircle,
-  IconRepeat,
-  IconUpload,
+    IconBookmark,
+    IconChartHistogram,
+    IconHeart,
+    IconMessageCircle,
+    IconRepeat,
+    IconUpload
 } from "@tabler/icons-react";
 import Image from "next/image";
-import { TwittType } from "../../../types/getAllTwittType";
-import Buttion from "../ui/Buttion";
-import ProfileComponents from "../ui/profileComponet";
 import { useEffect } from "react";
+import { TwittType } from "../../../types/getAllTwittType";
 import FollowButton from "../ui/followButton";
+import ProfileComponents from "../ui/profileComponet";
 
 const TwittCard = ({ id, twitt, userId, createdAt, image }: TwittType) => {
   const user = useCurrentUser((state) => state.user);
@@ -24,8 +21,14 @@ const TwittCard = ({ id, twitt, userId, createdAt, image }: TwittType) => {
   useEffect(() => {}, [user?.following]);
 
   return (
-    <div className="flex min-h-40 w-full gap-3 divide-y p-4 text-white">
-      <ProfileComponents href={`/profile/${id}`} image={userId?.image} />
+    <div
+      key={id}
+      className="flex min-h-40 w-full gap-3 divide-y p-4 text-white"
+    >
+      <ProfileComponents
+        href={`/profile/${userId?.id}`}
+        image={userId?.image}
+      />
 
       <div className="flex w-full flex-col justify-between gap-3">
         <div className="top items-sta flex justify-between gap-2">

@@ -4,7 +4,6 @@ import { cn } from "@/utils/cn";
 import { useTwitterAccount } from "@/zustand/twitterAccount";
 
 const Header = () => {
-   useGetCurrentUser();
   
 
   const { isFollowing, setIsFollowing } = useTwitterAccount((state) => state);

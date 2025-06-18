@@ -12,7 +12,7 @@ export const useFollow = () => {
       toast.success("Followed");
     },
     onError: (error) => {
-      console.log(error);
+
       toast.error(error.message);
     },
   });
