@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { TwittType } from "../../../../types/getAllTwittType";
 import TwittCard from "../TwittCard";
 import { ProfileMediaType } from "../../../../types/profile/type";
+import Link from "next/link";
 type ButtonType = "post" | "media";
 const WapperPost = ({ userId }: { userId: string }) => {
   const [buttonState, setbuttonState] = useState<ButtonType>("post");
@@ -62,7 +63,11 @@ const WapperPost = ({ userId }: { userId: string }) => {
             {data1.map(
               (item) =>
                 ((item.image !== undefined && item?.image?.length > 0) ||
-                  item.video !== null) && <ImageCard key={item.id} {...item} />,
+                  item.video !== null) && (
+                  <Link key={item.id} href={`/profile/p/${item.id}`}>
+                    <ImageCard {...item} />
+                  </Link>
+                ),
             )}
           </div>
         )}
@@ -73,8 +78,7 @@ const WapperPost = ({ userId }: { userId: string }) => {
 
 export default WapperPost;
 
-const ImageCard = ({ image, video, id }: ProfileMediaType) => {
-  console.log(image);
+const ImageCard = ({ image }: ProfileMediaType) => {
   return (
     <div className="group relative aspect-square overflow-hidden rounded-md border-[1px] border-neutral-600 transition-transform duration-200 hover:scale-105 hover:cursor-pointer">
       {image && (
