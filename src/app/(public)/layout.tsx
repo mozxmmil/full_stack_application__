@@ -4,7 +4,7 @@ import React from "react";
 import { GeistSans } from "geist/font/sans";
 import { cn } from "@/utils/cn";
 import BottomNavBar from "@/components/layouts/BottomNavBar";
-
+import "./index.css";
 type Props = {
   children: React.ReactNode;
 };

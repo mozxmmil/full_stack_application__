@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .commetSection {
+    &::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+      @apply bg-neutral-600
+    }
+    &::-webkit-scrollbar-button{
+        @apply bg-neutral-800
+    }
+    &::-webkit-scrollbar-thumb{
+        @apply bg-neutral-500;
+    }
+  }
+}
