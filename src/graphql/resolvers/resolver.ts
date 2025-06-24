@@ -6,6 +6,7 @@ import {
 } from "../controller/follow";
 import { getUserHandler } from "../controller/getUser";
 import {
+    getImageOrVideo,
   getProfileDataHandler,
   getProfileDataMediaHandler,
   getProfileDataTwittHandler,
@@ -23,7 +24,8 @@ export const Resolver = {
     uploadImage: uploadImageHandler,
     getProfileData: getProfileDataHandler,
     getProfileDataTwitt: getProfileDataTwittHandler,
-    getProfileDataMedia:getProfileDataMediaHandler
+    getProfileDataMedia:getProfileDataMediaHandler,
+    getImageOrVideo:getImageOrVideo
   },
   Twitt: {
     userId: getUserFromTwitt,

@@ -1,5 +1,6 @@
 import { graphqlClient } from "@/client/query";
 import {
+  getImageOrVideo,
   getUserProfileData,
   getUserProfileDataMedia,
   getUserProfileDataTwitt,
@@ -31,4 +32,14 @@ export const useGetPrfileDataMedia = (getProfileDataMediaId: string) => {
       graphqlClient.request(getUserProfileDataMedia, { getProfileDataMediaId }),
   });
   return { ...query, data: query.data?.getProfileDataMedia };
+};
+
+export const useGetImageOrVideo = (getImageOrVideoId: string) => {
+  const query = useQuery({
+    queryKey: ["get-Image-Video"],
+    queryFn: () =>
+      graphqlClient.request(getImageOrVideo, { getImageOrVideoId }),
+  });
+
+  return { ...query, data: query.data?.getImageOrVideo };
 };

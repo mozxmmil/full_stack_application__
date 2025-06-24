@@ -21,6 +21,7 @@ type Documents = {
     "\n  #graphql\n  query GetProfileData($getProfileDataId: String!) {\n    getProfileData(id: $getProfileDataId) {\n      name\n      updatedAt\n      image\n      following {\n        id\n      }\n      follower {\n        id\n      }\n      createdAt\n      email\n    }\n  }\n": typeof types.GetProfileDataDocument,
     "\n  #graphql\n\n  query GetUserProfileDataTiwtt($getProfileDataTwittId: String!) {\n    getProfileDataTwitt(id: $getProfileDataTwittId) {\n      image\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n": typeof types.GetUserProfileDataTiwttDocument,
     "\n  #graphql\n\n  query GetProfileDataMedia($getProfileDataMediaId: String!) {\n    getProfileDataMedia(id: $getProfileDataMediaId) {\n      id\n      video\n      image\n    }\n  }\n": typeof types.GetProfileDataMediaDocument,
+    "\n  #graphql\n\n  query GetImageOrVideo($getImageOrVideoId: String!) {\n    getImageOrVideo(id: $getImageOrVideoId) {\n      image\n      id\n      user {\n        image\n        name\n        id\n      }\n    }\n  }\n": typeof types.GetImageOrVideoDocument,
     "\n  #graphql\n\n  query GetUser {\n    getUser {\n      image\n      name\n      id\n      email\n\n      follower {\n        name\n        id\n      }\n\n      following {\n        name\n        id\n      }\n    }\n  }\n": typeof types.GetUserDocument,
     "\n  #graphql\n\n  query UploadImage($iamgeType: String!, $imageName: String!) {\n    uploadImage(iamgeType: $iamgeType, imageName: $imageName)\n  }\n": typeof types.UploadImageDocument,
 };
@@ -32,6 +33,7 @@ const documents: Documents = {
     "\n  #graphql\n  query GetProfileData($getProfileDataId: String!) {\n    getProfileData(id: $getProfileDataId) {\n      name\n      updatedAt\n      image\n      following {\n        id\n      }\n      follower {\n        id\n      }\n      createdAt\n      email\n    }\n  }\n": types.GetProfileDataDocument,
     "\n  #graphql\n\n  query GetUserProfileDataTiwtt($getProfileDataTwittId: String!) {\n    getProfileDataTwitt(id: $getProfileDataTwittId) {\n      image\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n": types.GetUserProfileDataTiwttDocument,
     "\n  #graphql\n\n  query GetProfileDataMedia($getProfileDataMediaId: String!) {\n    getProfileDataMedia(id: $getProfileDataMediaId) {\n      id\n      video\n      image\n    }\n  }\n": types.GetProfileDataMediaDocument,
+    "\n  #graphql\n\n  query GetImageOrVideo($getImageOrVideoId: String!) {\n    getImageOrVideo(id: $getImageOrVideoId) {\n      image\n      id\n      user {\n        image\n        name\n        id\n      }\n    }\n  }\n": types.GetImageOrVideoDocument,
     "\n  #graphql\n\n  query GetUser {\n    getUser {\n      image\n      name\n      id\n      email\n\n      follower {\n        name\n        id\n      }\n\n      following {\n        name\n        id\n      }\n    }\n  }\n": types.GetUserDocument,
     "\n  #graphql\n\n  query UploadImage($iamgeType: String!, $imageName: String!) {\n    uploadImage(iamgeType: $iamgeType, imageName: $imageName)\n  }\n": types.UploadImageDocument,
 };
@@ -78,6 +80,10 @@ export function graphql(source: "\n  #graphql\n\n  query GetUserProfileDataTiwtt
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  #graphql\n\n  query GetProfileDataMedia($getProfileDataMediaId: String!) {\n    getProfileDataMedia(id: $getProfileDataMediaId) {\n      id\n      video\n      image\n    }\n  }\n"): (typeof documents)["\n  #graphql\n\n  query GetProfileDataMedia($getProfileDataMediaId: String!) {\n    getProfileDataMedia(id: $getProfileDataMediaId) {\n      id\n      video\n      image\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  #graphql\n\n  query GetImageOrVideo($getImageOrVideoId: String!) {\n    getImageOrVideo(id: $getImageOrVideoId) {\n      image\n      id\n      user {\n        image\n        name\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  #graphql\n\n  query GetImageOrVideo($getImageOrVideoId: String!) {\n    getImageOrVideo(id: $getImageOrVideoId) {\n      image\n      id\n      user {\n        image\n        name\n        id\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

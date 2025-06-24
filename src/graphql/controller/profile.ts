@@ -45,3 +45,19 @@ export const getProfileDataMediaHandler = async (
   });
   return porfileDataImage;
 };
+
+export const getImageOrVideo = async (_: any, { id }: { id: string }) => {
+  if (!id) throw new Error("userId required");
+
+  const data = await prismaClient.twitt.findFirst({
+    where: {
+      id: id,
+    },
+    include: {
+      user: true,
+    },
+  });
+ 
+  if (!data) throw new Error("image not found");
+  return data;
+};

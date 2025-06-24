@@ -49,3 +49,19 @@ export const getUserProfileDataMedia = graphql(`
     }
   }
 `);
+
+export const getImageOrVideo = graphql(`
+  #graphql
+
+  query GetImageOrVideo($getImageOrVideoId: String!) {
+    getImageOrVideo(id: $getImageOrVideoId) {
+      image
+      id
+      user {
+        image
+        name
+        id
+      }
+    }
+  }
+`);

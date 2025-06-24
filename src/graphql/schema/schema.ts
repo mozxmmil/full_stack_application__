@@ -35,6 +35,17 @@ type ProfileDataMedia {
     id:String
     image:String
     video:String
+    
+
+}
+
+type ImageOrVideo {
+    id:String
+    image:String
+    video:String
+    createdAt:DateTime
+    user:User
+
 }
 
   type Query {
@@ -44,6 +55,7 @@ type ProfileDataMedia {
     getProfileData(id:String!):User
     getProfileDataTwitt(id:String!):[Twitt]
     getProfileDataMedia(id:String!):[ProfileDataMedia]
+    getImageOrVideo(id:String!):ImageOrVideo
   }
 
 
