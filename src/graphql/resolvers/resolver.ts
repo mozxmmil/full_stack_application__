@@ -1,3 +1,4 @@
+import { getCommentHandler } from "../controller/comments";
 import {
   folloUserHandler,
   getFollowingInfoHandler,
@@ -25,7 +26,8 @@ export const Resolver = {
     getProfileData: getProfileDataHandler,
     getProfileDataTwitt: getProfileDataTwittHandler,
     getProfileDataMedia:getProfileDataMediaHandler,
-    getImageOrVideo:getImageOrVideo
+    getImageOrVideo:getImageOrVideo,
+    getComment:getCommentHandler
   },
   Twitt: {
     userId: getUserFromTwitt,

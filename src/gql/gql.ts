@@ -18,6 +18,7 @@ type Documents = {
     "\n  #graphql\n\n  mutation FollowUser($userId: String!) {\n    followUser(userId: $userId)\n  }\n": typeof types.FollowUserDocument,
     "\n  #graphql\n  mutation UnFollowUser($userId: String!) {\n    unFollowUser(userId: $userId)\n  }\n": typeof types.UnFollowUserDocument,
     "\n  #graphql\n  query getAllTwitts {\n    getTwitts {\n      image\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n": typeof types.GetAllTwittsDocument,
+    "\n  #graphql\n  query GetComment($postId: String!) {\n  getComment(postId: $postId) {\n    comment\n    createdAt\n    id\n    user {\n      name\n      image\n    }\n  }\n}\n": typeof types.GetCommentDocument,
     "\n  #graphql\n  query GetProfileData($getProfileDataId: String!) {\n    getProfileData(id: $getProfileDataId) {\n      name\n      updatedAt\n      image\n      following {\n        id\n      }\n      follower {\n        id\n      }\n      createdAt\n      email\n    }\n  }\n": typeof types.GetProfileDataDocument,
     "\n  #graphql\n\n  query GetUserProfileDataTiwtt($getProfileDataTwittId: String!) {\n    getProfileDataTwitt(id: $getProfileDataTwittId) {\n      image\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n": typeof types.GetUserProfileDataTiwttDocument,
     "\n  #graphql\n\n  query GetProfileDataMedia($getProfileDataMediaId: String!) {\n    getProfileDataMedia(id: $getProfileDataMediaId) {\n      id\n      video\n      image\n    }\n  }\n": typeof types.GetProfileDataMediaDocument,
@@ -30,6 +31,7 @@ const documents: Documents = {
     "\n  #graphql\n\n  mutation FollowUser($userId: String!) {\n    followUser(userId: $userId)\n  }\n": types.FollowUserDocument,
     "\n  #graphql\n  mutation UnFollowUser($userId: String!) {\n    unFollowUser(userId: $userId)\n  }\n": types.UnFollowUserDocument,
     "\n  #graphql\n  query getAllTwitts {\n    getTwitts {\n      image\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n": types.GetAllTwittsDocument,
+    "\n  #graphql\n  query GetComment($postId: String!) {\n  getComment(postId: $postId) {\n    comment\n    createdAt\n    id\n    user {\n      name\n      image\n    }\n  }\n}\n": types.GetCommentDocument,
     "\n  #graphql\n  query GetProfileData($getProfileDataId: String!) {\n    getProfileData(id: $getProfileDataId) {\n      name\n      updatedAt\n      image\n      following {\n        id\n      }\n      follower {\n        id\n      }\n      createdAt\n      email\n    }\n  }\n": types.GetProfileDataDocument,
     "\n  #graphql\n\n  query GetUserProfileDataTiwtt($getProfileDataTwittId: String!) {\n    getProfileDataTwitt(id: $getProfileDataTwittId) {\n      image\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n": types.GetUserProfileDataTiwttDocument,
     "\n  #graphql\n\n  query GetProfileDataMedia($getProfileDataMediaId: String!) {\n    getProfileDataMedia(id: $getProfileDataMediaId) {\n      id\n      video\n      image\n    }\n  }\n": types.GetProfileDataMediaDocument,
@@ -68,6 +70,10 @@ export function graphql(source: "\n  #graphql\n  mutation UnFollowUser($userId: 
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  #graphql\n  query getAllTwitts {\n    getTwitts {\n      image\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  #graphql\n  query getAllTwitts {\n    getTwitts {\n      image\n      twitt\n      id\n      updatedAt\n      createdAt\n      userId {\n        name\n        image\n        id\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  #graphql\n  query GetComment($postId: String!) {\n  getComment(postId: $postId) {\n    comment\n    createdAt\n    id\n    user {\n      name\n      image\n    }\n  }\n}\n"): (typeof documents)["\n  #graphql\n  query GetComment($postId: String!) {\n  getComment(postId: $postId) {\n    comment\n    createdAt\n    id\n    user {\n      name\n      image\n    }\n  }\n}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

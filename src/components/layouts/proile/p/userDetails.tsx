@@ -6,7 +6,7 @@ import ProfileComponents from "@/components/ui/profileComponet";
 import Buttion from "@/components/ui/Buttion";
 import React, { useState } from "react";
 import { cn } from "@/utils/cn";
-import { useDoComments } from "@/hook/comment";
+import { useDoComments, useGetComment } from "@/hook/comment";
 import { IconLoader, IconLoader2 } from "@tabler/icons-react";
 import { toast } from "sonner";
 
@@ -14,7 +14,8 @@ const UserDetailsComp = ({ getImageOrVideo }: GetImageOrVideoQuery) => {
   const [message, setmessage] = useState<string | null>("");
   const { mutateAsync, isPending, isError, data } = useDoComments();
 
-  console.log(isError);
+  const { data: data1 } = useGetComment(getImageOrVideo?.id as string);
+  console.log(data1);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.stopPropagation();

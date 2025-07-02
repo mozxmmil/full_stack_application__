@@ -47,6 +47,12 @@ type ImageOrVideo {
     user:User
 }
 
+type Comment {
+    id:String
+    comment:String
+    createdAt:DateTime
+    user:User
+}
 
 
   type Query {
@@ -57,7 +63,7 @@ type ImageOrVideo {
     getProfileDataTwitt(id:String!):[Twitt]
     getProfileDataMedia(id:String!):[ProfileDataMedia]
     getImageOrVideo(id:String!):ImageOrVideo
-    
+    getComment(postId:String!):[Comment]
     
   }
 
