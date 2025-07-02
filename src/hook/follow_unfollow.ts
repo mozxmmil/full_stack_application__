@@ -29,7 +29,7 @@ export const useUnfollow = () => {
       toast.success("unFollow");
     },
     onError: (error) => {
-        console.log(error);
+        
         toast.error(error.message);
       },
   });

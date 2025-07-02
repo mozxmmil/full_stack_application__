@@ -45,8 +45,9 @@ type ImageOrVideo {
     video:String
     createdAt:DateTime
     user:User
-
 }
+
+
 
   type Query {
     getUser:User
@@ -56,6 +57,8 @@ type ImageOrVideo {
     getProfileDataTwitt(id:String!):[Twitt]
     getProfileDataMedia(id:String!):[ProfileDataMedia]
     getImageOrVideo(id:String!):ImageOrVideo
+    
+    
   }
 
 

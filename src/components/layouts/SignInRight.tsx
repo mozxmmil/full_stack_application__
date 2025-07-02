@@ -62,7 +62,7 @@ const SigninRightCard = () => {
       ...data,
       redirect: false,
     });
-    console.log(res)
+    
     if (res?.ok) {
       setLoading(false);
       toast.success("signIn susscess");

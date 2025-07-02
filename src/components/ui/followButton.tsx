@@ -17,14 +17,13 @@ const FollowButton = ({ userId, user }: Props) => {
     error: followError,
   } = useFollow();
 
-  
   const {
     mutate: unFollowMutation,
     isPending: unFollowPending,
     data: unfollowResponse,
     error: unFollowError,
   } = useUnfollow();
-  
+
   const handleFollow = (id: string) => {
     if (!id) return;
     followMutation(id);

@@ -12,8 +12,6 @@ const PhotoViewPage = () => {
   const params = useParams();
   const Postid = params.postId;
   const { data, isLoading, error } = useGetImageOrVideo(Postid as string);
-  console.log(data);
-  console.log(error);
   const router = useRouter();
   const handleClickBack = () => {
     router.back();
@@ -27,7 +25,7 @@ const PhotoViewPage = () => {
       >
         <IconX />
       </div>
-      <div className="mx-auto grid h-full w-full grid-cols-1 overflow-hidden bg-zinc-900 sm:max-w-3xl sm:min-w-5xl sm:grid-cols-2">
+      <div className="mx-auto grid h-fit w-full grid-cols-1 overflow-hidden bg-zinc-900  sm:max-w-5xl sm:grid-cols-2">
         <div className="flex w-full flex-col">
           <UserProfileSection
             href={`/profile/${data?.user?.id}`}
@@ -50,7 +48,7 @@ const PhotoViewPage = () => {
             )}
           </div>
         </div>
-        <div>
+        <div className="w-full">
           <UserDetailsComp getImageOrVideo={data} />
         </div>
       </div>

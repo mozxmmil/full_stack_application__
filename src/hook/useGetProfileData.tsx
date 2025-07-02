@@ -39,6 +39,7 @@ export const useGetImageOrVideo = (getImageOrVideoId: string) => {
     queryKey: ["get-Image-Video"],
     queryFn: () =>
       graphqlClient.request(getImageOrVideo, { getImageOrVideoId }),
+    
   });
 
   return { ...query, data: query.data?.getImageOrVideo };

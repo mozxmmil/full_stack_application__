@@ -15,7 +15,7 @@ const server = new ApolloServer({
 // ✅ Correct context function
 const context = async (req: NextRequest) => {
   const header = req.headers.get("Authorization")?.replace("Bearer", "").trim();
-  
+
   let user = null;
   if (header) {
     try {
@@ -32,7 +32,7 @@ export const POST = startServerAndCreateNextHandler(server, { context });
 
 // Optional type for token payload
 
-interface user {
+export interface user {
   userId: string;
   email: string;
   iat: number;

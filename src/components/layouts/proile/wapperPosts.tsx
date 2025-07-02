@@ -24,7 +24,6 @@ const WapperPost = ({ userId }: { userId: string }) => {
   useEffect(() => {
     if (buttonState === "post") {
       query.refetch();
-      //   console.log(query.data);
     } else {
       query1.refetch();
     }

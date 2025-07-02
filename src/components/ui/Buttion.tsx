@@ -19,11 +19,23 @@ interface Props
     VariantProps<typeof buttonVariants> {
   title: string;
   icon?: React.ReactNode;
+  disabled?: boolean;
 }
 
-const Buttion = ({ className, icon, title, locked, ...props }: Props) => {
+const Buttion = ({
+  className,
+  icon,
+  title,
+  locked,
+  disabled,
+  ...props
+}: Props) => {
   return (
-    <button {...props} className={cn(buttonVariants({ locked, className }))}>
+    <button
+      disabled={disabled}
+      {...props}
+      className={cn(buttonVariants({ locked, className }))}
+    >
       {icon && <span>{icon}</span>}
       {title}
       {locked && (
