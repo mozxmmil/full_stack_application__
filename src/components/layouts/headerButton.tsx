@@ -1,5 +1,4 @@
 "use client";
-import { useGetCurrentUser } from "@/hook/useTwitt";
 import { cn } from "@/utils/cn";
 import { useTwitterAccount } from "@/zustand/twitterAccount";
 

@@ -1,20 +1,23 @@
-import { GetImageOrVideoQuery } from "@/gql/graphql";
-import CommentSection from "../../commentSection";
-import UserProfileSection from "../../commentSectionUserProfile";
-import LikeCommentSection from "./likeCommentSection";
-import ProfileComponents from "@/components/ui/profileComponet";
 import Buttion from "@/components/ui/Buttion";
-import React, { useState } from "react";
-import { cn } from "@/utils/cn";
+import ProfileComponents from "@/components/ui/profileComponet";
+import { GetImageOrVideoQuery } from "@/gql/graphql";
 import { useDoComments, useGetComment } from "@/hook/comment";
-import { IconLoader, IconLoader2 } from "@tabler/icons-react";
+import { cn } from "@/utils/cn";
+import { IconLoader2 } from "@tabler/icons-react";
+import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
+import UserProfileSection from "../../commentSectionUserProfile";
+import InnerComponentData from "./innterComponentData";
+import LikeCommentSection from "./likeCommentSection";
 
 const UserDetailsComp = ({ getImageOrVideo }: GetImageOrVideoQuery) => {
+  console.log(getImageOrVideo?.id);
   const [message, setmessage] = useState<string | null>("");
-  const { mutateAsync, isPending, isError, data } = useDoComments();
+  const { mutateAsync, isPending, data } = useDoComments();
 
-  const { data: data1 } = useGetComment(getImageOrVideo?.id as string);
+  const { data: data1, refetch } = useGetComment(getImageOrVideo?.id as string);
+  console.log(data1?.getComment);
+
   console.log(data1);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -37,6 +40,10 @@ const UserDetailsComp = ({ getImageOrVideo }: GetImageOrVideoQuery) => {
       setmessage("");
     }
   };
+  useEffect(() => {
+    refetch();
+  }, [getImageOrVideo?.id, refetch]);
+
   return (
     <aside className="flex h-full flex-col justify-between p-3">
       <UserProfileSection
@@ -46,7 +53,18 @@ const UserDetailsComp = ({ getImageOrVideo }: GetImageOrVideoQuery) => {
         className="hidden sm:block"
       />
       <div className="hidden border-y-2 border-neutral-500 sm:block">
-        <CommentSection />
+        {/* {data1?.map((item) => <CommentSection key={item?.id} {...item} />)} */}
+        <div className="commetSection flex h-120 flex-col divide-y divide-neutral-500 overflow-y-auto rounded-md py-6">
+          {data1 ? (
+            data1?.getComment?.map((item) => (
+              <InnerComponentData key={item?.id} {...item} />
+            ))
+          ) : (
+            <div className="flex h-full w-full items-center justify-center">
+              <IconLoader2 className="animate-spin text-2xl" />
+            </div>
+          )}
+        </div>
       </div>
       <LikeCommentSection />
       <div className="flex w-full items-center gap-3">

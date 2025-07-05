@@ -9,7 +9,7 @@ import { prismaClient } from "@/utils/dbConnect";
 import { generateAccessToken } from "@/utils/accessToken&refreshTokenGen";
 import { cookies } from "next/headers";
 
-export const authOptions: NextAuthOptions = {
+ const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prismaClient),
 
   providers: [

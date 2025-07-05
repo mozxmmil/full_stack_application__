@@ -6,12 +6,12 @@ import { useGetImageOrVideo } from "@/hook/useGetProfileData";
 import { IconLoader, IconX } from "@tabler/icons-react";
 import { useParams, useRouter } from "next/navigation";
 
-import React, { useState } from "react";
+
 
 const PhotoViewPage = () => {
   const params = useParams();
   const Postid = params.postId;
-  const { data, isLoading, error } = useGetImageOrVideo(Postid as string);
+  const { data, isLoading, } = useGetImageOrVideo(Postid as string);
   const router = useRouter();
   const handleClickBack = () => {
     router.back();

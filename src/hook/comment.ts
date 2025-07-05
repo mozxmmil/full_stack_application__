@@ -1,19 +1,23 @@
 import { graphqlClient } from "@/client/query";
-import {
-    getPostComments
-} from "@/graphql/client/query/getCommnet";
+import { getPostComments } from "@/graphql/client/query/getCommnet";
 import { signupAxiso } from "@/utils/apicall";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useGetComment = (postId: string) => {
+  console.log(postId);
   const query = useQuery({
     queryKey: ["getComment"],
-    queryFn:  () => {
-     return graphqlClient.request(getPostComments, { postId });
+
+    queryFn: () => {
+      return graphqlClient.request(getPostComments, { postId });
     },
+    staleTime: 0, 
+    refetchOnMount: true, 
+    refetchOnWindowFocus: false, 
+
   });
-  console.log(query);
-  return { query, data: query.data?.getComment};
+
+  return query;
 };
 
 type InputData = {

@@ -4,7 +4,7 @@ export async function GET(req: NextRequest) {
   try {
     // 1. Authorization header check
     const header = req.headers.get("Authorization");
-    
+
     if (!header) {
       // 2. Proper error response with status code
       return NextResponse.json(
@@ -25,6 +25,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ message: "hello", header }, { status: 200 });
   } catch (error) {
     // 5. Proper error handling
+    console.log(error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 },

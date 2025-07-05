@@ -27,7 +27,7 @@ const WapperPost = ({ userId }: { userId: string }) => {
     } else {
       query1.refetch();
     }
-  }, [buttonState]);
+  }, [buttonState, query, query1]);
 
   return (
     <div className="mt-5 min-h-70">

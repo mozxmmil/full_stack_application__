@@ -10,19 +10,10 @@ interface Props {
 }
 
 const FollowButton = ({ userId, user }: Props) => {
-  const {
-    mutate: followMutation,
-    isPending: followPending,
-    data: followResponse,
-    error: followError,
-  } = useFollow();
+  const { mutate: followMutation, isPending: followPending } = useFollow();
 
-  const {
-    mutate: unFollowMutation,
-    isPending: unFollowPending,
-    data: unfollowResponse,
-    error: unFollowError,
-  } = useUnfollow();
+  const { mutate: unFollowMutation, isPending: unFollowPending } =
+    useUnfollow();
 
   const handleFollow = (id: string) => {
     if (!id) return;

@@ -1,19 +1,19 @@
 "use client";
 import { cn } from "@/utils/cn";
 import {
-  IconArrowNarrowRightDashed,
-  IconArrowRightDashed,
-  IconBrandAppleFilled,
-  IconBrandGoogleFilled,
-  IconLoader2,
+    IconArrowNarrowRightDashed,
+    IconArrowRightDashed,
+    IconBrandAppleFilled,
+    IconBrandGoogleFilled,
+    IconLoader2,
 } from "@tabler/icons-react";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import Buttion from "../ui/Buttion";
 import { signIn } from "next-auth/react";
-import { SigninInputType, signinSchema } from "../../../types/zod/signinSchema";
-import { toast } from "sonner";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { toast } from "sonner";
+import { SigninInputType, signinSchema } from "../../../types/zod/signinSchema";
+import Buttion from "../ui/Buttion";
 const SigninRightCard = () => {
   const router = useRouter();
   const [step, setStep] = useState<number>(1);

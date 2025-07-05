@@ -22,7 +22,7 @@ export async function PUT(req: NextRequest) {
         userId: user.userId as string,
       },
     });
-    console.log(comment);
+    
     if (!comment) throw new Error("Commnet couldn't create");
 
     return NextResponse.json(
@@ -33,7 +33,7 @@ export async function PUT(req: NextRequest) {
       { status: 200 },
     );
   } catch (error) {
-    console.log(error);
+    
     return NextResponse.json({ data: error, success: false }, { status: 401 });
   }
 }

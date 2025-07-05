@@ -37,7 +37,7 @@ export function GetUserFromAccessToken(token: string) {
     const user = verify(token, secret);
     if (!user) throw new Error("Acesstoken Expire");
     return user;
-  } catch (err) {
+  } catch {
     throw new Error("invalid tokend");
   }
 }
@@ -52,7 +52,7 @@ export async function GetUserFromAccessTokenForMiddleware(token: string) {
     });
     if (!payload) throw new Error("Access token expired");
     return payload;
-  } catch (err) {
+  } catch  {
     throw new Error("Invalid token");
   }
 }
