@@ -8,6 +8,8 @@ import { signupAxiso } from "@/utils/apicall";
 import { signupDataResponceType } from "../../../types/signupDataResponceType";
 import { useRouter } from "next/navigation";
 import { IconLoader } from "@tabler/icons-react";
+import { useGetCurrentUser } from "@/hook/useTwitt";
+import { useCurrentUser } from "@/zustand/currentUser";
 
 const BottomNavBar = () => {
   const router = useRouter();
@@ -65,9 +67,10 @@ const BottomIconComponent = ({
   title,
   isNotification,
   fun,
+  isDynemic,
 }: SideBarListProps) => {
+  const currentUser = useCurrentUser((state) => state.user);
   const handleClicked = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    
     if (title === "More") {
       e.preventDefault();
       if (fun) fun();
@@ -76,7 +79,7 @@ const BottomIconComponent = ({
   return (
     <Link
       onClick={handleClicked}
-      href={link}
+      href={isDynemic ? `${link}/${currentUser?.id}` : link}
       className="relative flex size-12 items-center justify-center rounded-full border border-neutral-400"
     >
       {isNotification && (

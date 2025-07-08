@@ -6,4 +6,5 @@ export type SideBarListProps = {
   link: string;
   isNotification?: boolean;
   fun?: () => void;
+  isDynemic: boolean;
 };
