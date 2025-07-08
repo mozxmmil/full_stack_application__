@@ -1,11 +1,11 @@
 "use client";
 import { cn } from "@/utils/cn";
 import {
-    IconArrowNarrowRightDashed,
-    IconArrowRightDashed,
-    IconBrandAppleFilled,
-    IconBrandGoogleFilled,
-    IconLoader2,
+  IconArrowNarrowRightDashed,
+  IconArrowRightDashed,
+  IconBrandAppleFilled,
+  IconBrandGoogleFilled,
+  IconLoader2,
 } from "@tabler/icons-react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -41,6 +41,7 @@ const SigninRightCard = () => {
     }
   };
 
+  console.log("hello from");
   const handleSumit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -62,7 +63,7 @@ const SigninRightCard = () => {
       ...data,
       redirect: false,
     });
-    
+    console.log(res);
     if (res?.ok) {
       setLoading(false);
       toast.success("signIn susscess");
@@ -75,7 +76,6 @@ const SigninRightCard = () => {
       return;
     }
   };
-  
 
   return (
     <div className="flex max-h-full w-full flex-col items-center justify-center gap-2 text-white md:items-start md:justify-start md:gap-4">
