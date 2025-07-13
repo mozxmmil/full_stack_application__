@@ -64,6 +64,7 @@ type Comment {
     getProfileDataMedia(id:String!):[ProfileDataMedia]
     getImageOrVideo(id:String!):ImageOrVideo
     getComment(postId:String!):[Comment]
+    getRecommcomededUser(id:String!):[User]
     
   }
 

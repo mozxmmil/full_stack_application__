@@ -21,7 +21,10 @@ export const useGetProfileDataTwitt = (getProfileDataTwittId: string) => {
     queryKey: ["profile-Twitt-data"],
     queryFn: () =>
       graphqlClient.request(getUserProfileDataTwitt, { getProfileDataTwittId }),
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
+
   return { ...query, data: query.data?.getProfileDataTwitt };
 };
 
@@ -39,7 +42,6 @@ export const useGetImageOrVideo = (getImageOrVideoId: string) => {
     queryKey: ["get-Image-Video"],
     queryFn: () =>
       graphqlClient.request(getImageOrVideo, { getImageOrVideoId }),
-    
   });
 
   return { ...query, data: query.data?.getImageOrVideo };

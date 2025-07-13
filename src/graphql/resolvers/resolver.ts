@@ -12,6 +12,7 @@ import {
   getProfileDataMediaHandler,
   getProfileDataTwittHandler,
 } from "../controller/profile";
+import { getRecommendedUserHandler } from "../controller/refcommendedUser";
 import {
   createTwittHandler,
   getTwittsHandler,
@@ -27,7 +28,8 @@ export const Resolver = {
     getProfileDataTwitt: getProfileDataTwittHandler,
     getProfileDataMedia:getProfileDataMediaHandler,
     getImageOrVideo:getImageOrVideo,
-    getComment:getCommentHandler
+    getComment:getCommentHandler,
+    getRecommcomededUser:getRecommendedUserHandler
   },
   Twitt: {
     userId: getUserFromTwitt,

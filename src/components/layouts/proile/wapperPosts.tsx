@@ -13,6 +13,7 @@ import TwittCard from "../TwittCard";
 import { ProfileMediaType } from "../../../../types/profile/type";
 import Link from "next/link";
 type ButtonType = "post" | "media";
+
 const WapperPost = ({ userId }: { userId: string }) => {
   const [buttonState, setbuttonState] = useState<ButtonType>("post");
 
@@ -20,14 +21,14 @@ const WapperPost = ({ userId }: { userId: string }) => {
   const query1 = useGetPrfileDataMedia(userId);
   const data = query.data as TwittType[];
   const data1 = query1.data as ProfileMediaType[];
-
   useEffect(() => {
     if (buttonState === "post") {
       query.refetch();
     } else {
       query1.refetch();
     }
-  }, [buttonState, query, query1]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [buttonState]);
 
   return (
     <div className="mt-5 min-h-70">
