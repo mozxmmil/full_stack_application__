@@ -57,7 +57,7 @@ export const getImageOrVideo = async (_: any, { id }: { id: string }) => {
       user: true,
     },
   });
- 
+
   if (!data) throw new Error("image not found");
   return data;
 };
