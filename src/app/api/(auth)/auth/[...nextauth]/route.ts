@@ -9,7 +9,7 @@ import { prismaClient } from "@/utils/dbConnect";
 import { generateAccessToken } from "@/utils/accessToken&refreshTokenGen";
 import { cookies } from "next/headers";
 
- const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prismaClient),
 
   providers: [
@@ -67,6 +67,8 @@ import { cookies } from "next/headers";
   },
   callbacks: {
     async signIn({ user, account }) {
+      console.log(user);
+      console.log(account);
       if (account?.provider === "google") {
         const userExists = await prismaClient.user.findUnique({
           where: { email: user.email },
