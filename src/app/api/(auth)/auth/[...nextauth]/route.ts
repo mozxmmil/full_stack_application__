@@ -134,7 +134,7 @@ const authOptions: NextAuthOptions = {
         const cookie = await cookies();
         cookie.set("access_token", account.access_token as string, {
           path: "/",
-          secure: false,
+          secure: process.env.NODE_ENV === "production",
           httpOnly: true,
         });
       }
@@ -142,7 +142,7 @@ const authOptions: NextAuthOptions = {
         const cookie = await cookies();
         cookie.set("access_token", account.access_token as string, {
           path: "/",
-          secure: false,
+          secure: process.env.NODE_ENV === "production",
           httpOnly: true,
         });
       }
