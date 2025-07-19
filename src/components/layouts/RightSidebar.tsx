@@ -1,7 +1,6 @@
 "use client";
 import { useGetRecommendedUser } from "@/hook/userGetRecommendedUser";
 import SuggestionUserProfile from "../ui/suggestionUserProfile";
-import { getRecommcomededUser } from "@/graphql/client/query/getRecommendedUser";
 
 const RightSidebar = () => {
   const { data } = useGetRecommendedUser();
