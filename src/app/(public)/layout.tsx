@@ -5,9 +5,15 @@ import { GeistSans } from "geist/font/sans";
 import { cn } from "@/utils/cn";
 import BottomNavBar from "@/components/layouts/BottomNavBar";
 import "./index.css";
+import { Metadata } from "next";
 type Props = {
   children: React.ReactNode;
 };
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Home",
+  };
+}
 const layout = ({ children }: Props) => {
   return (
     <main

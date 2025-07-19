@@ -41,7 +41,7 @@ const SigninRightCard = () => {
     }
   };
 
-  console.log("hello from");
+  
   const handleSumit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
